@@ -1,8 +1,10 @@
+
 import React, { useState } from 'react';
 import RupeeCoinIcon from '../components/icons/RupeeCoinIcon';
 import SubmitReferralIcon from '../components/icons/SubmitReferralIcon';
 import ProjectConfirmIcon from '../components/icons/ProjectConfirmIcon';
 import GetRewardedIcon from '../components/icons/GetRewardedIcon';
+import { submitToGoogleSheets } from '../utils/googleSheet';
 
 const Step: React.FC<{ icon: React.ReactNode; title: string; description: string }> = ({ icon, title, description }) => (
     <div className="flex flex-col items-center text-center p-4">
@@ -22,20 +24,25 @@ const ReferralPage: React.FC = () => {
     friendPhone: '',
     friendEmail: '',
   });
-  const [status, setStatus] = useState<'idle' | 'loading' | 'success'>('idle');
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormState(prevState => ({ ...prevState, [name]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setStatus('loading');
-    setTimeout(() => {
-      console.log('Referral Submitted:', formState);
+
+    const success = await submitToGoogleSheets(formState, 'Referral Program');
+
+    if (success) {
       setStatus('success');
-    }, 1500);
+      setFormState({ yourName: '', yourPhone: '', friendName: '', friendPhone: '', friendEmail: '' });
+    } else {
+      setStatus('error');
+    }
   };
     
   return (
@@ -130,6 +137,7 @@ const ReferralPage: React.FC = () => {
                         </svg>
                         <h3 className="text-2xl font-bold text-card-foreground">Referral Sent!</h3>
                         <p className="text-muted-foreground mt-2">Thank you for your referral. We'll be in touch with your friend shortly and will update you on the progress.</p>
+                        <button onClick={() => setStatus('idle')} className="mt-6 text-secondary hover:underline">Submit another referral</button>
                     </div>
                     ) : (
                     <form onSubmit={handleSubmit} className="space-y-6">
@@ -158,6 +166,9 @@ const ReferralPage: React.FC = () => {
                             <label htmlFor="friendEmail" className="block text-sm font-medium text-muted-foreground">Friend's Email (Optional)</label>
                             <input type="email" name="friendEmail" id="friendEmail" value={formState.friendEmail} onChange={handleChange} className="mt-1 block w-full px-4 py-3 bg-input border border-border rounded-md shadow-sm focus:outline-none focus:ring-tertiary focus:border-tertiary" />
                         </div>
+                        {status === 'error' && (
+                            <p className="text-destructive text-sm text-center">Something went wrong. Please try again.</p>
+                        )}
                         <div className="pt-4">
                             <button type="submit" disabled={status === 'loading'} className="w-full flex justify-center py-4 px-4 border border-transparent rounded-md shadow-sm text-lg font-medium text-secondary-foreground bg-secondary hover:bg-secondary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-secondary disabled:bg-muted disabled:text-muted-foreground transition-colors duration-300">
                                 {status === 'loading' ? 'Submitting...' : 'Submit Referral'}

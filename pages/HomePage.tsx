@@ -132,7 +132,7 @@ const HomePage: React.FC = () => {
             <h2 className="text-3xl md:text-4xl font-bold text-foreground">Explore Our Expertise</h2>
             <p className="mt-2 text-muted-foreground max-w-2xl mx-auto">From concept to creation, we offer a complete suite of construction services.</p>
           </div>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 max-w-7xl mx-auto">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 w-full mx-auto">
             {SERVICES.map(service => (
               <HomeServiceCard key={service.id} service={service} />
             ))}

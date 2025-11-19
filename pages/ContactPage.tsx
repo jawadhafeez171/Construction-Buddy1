@@ -1,8 +1,10 @@
+
 import React, { useState } from 'react';
 import { PHONE_NUMBER, ADDRESS } from '../constants';
 import PhoneIcon from '../components/icons/PhoneIcon';
 import LocationIcon from '../components/icons/LocationIcon';
 import MailIcon from '../components/icons/MailIcon';
+import { submitToGoogleSheets } from '../utils/googleSheet';
 
 const ContactPage: React.FC = () => {
   const [formState, setFormState] = useState({
@@ -11,20 +13,25 @@ const ContactPage: React.FC = () => {
     phone: '',
     message: '',
   });
-  const [status, setStatus] = useState<'idle' | 'loading' | 'success'>('idle');
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormState(prevState => ({ ...prevState, [name]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setStatus('loading');
-    // Simulate API call
-    setTimeout(() => {
+    
+    const success = await submitToGoogleSheets(formState, 'Contact Page');
+    
+    if (success) {
       setStatus('success');
-    }, 2000);
+      setFormState({ name: '', email: '', phone: '', message: '' });
+    } else {
+      setStatus('error');
+    }
   };
 
   return (
@@ -82,6 +89,7 @@ const ContactPage: React.FC = () => {
                 </svg>
                 <h3 className="text-2xl font-bold text-card-foreground">Thank You!</h3>
                 <p className="text-muted-foreground mt-2">Your message has been sent successfully. We will get back to you shortly.</p>
+                <button onClick={() => setStatus('idle')} className="mt-6 text-secondary hover:underline">Send another message</button>
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-6">
@@ -101,6 +109,9 @@ const ContactPage: React.FC = () => {
                   <label htmlFor="message" className="block text-sm font-medium text-muted-foreground">Message</label>
                   <textarea name="message" id="message" rows={4} required value={formState.message} onChange={handleChange} className="mt-1 block w-full px-3 py-2 bg-input border border-border rounded-md shadow-sm focus:outline-none focus:ring-tertiary focus:border-tertiary"></textarea>
                 </div>
+                {status === 'error' && (
+                    <p className="text-destructive text-sm">Something went wrong. Please try again later.</p>
+                )}
                 <div>
                   <button type="submit" disabled={status === 'loading'} className="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-secondary-foreground bg-secondary hover:bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-secondary disabled:bg-muted disabled:text-muted-foreground">
                     {status === 'loading' ? 'Sending...' : 'Send Message'}

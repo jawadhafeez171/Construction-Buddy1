@@ -1,5 +1,7 @@
+
 import React, { useState } from 'react';
 import { SERVICES } from '../constants';
+import { submitToGoogleSheets } from '../utils/googleSheet';
 
 const QuickQuoteForm: React.FC = () => {
   const [formState, setFormState] = useState({
@@ -7,20 +9,25 @@ const QuickQuoteForm: React.FC = () => {
     phone: '',
     service: '',
   });
-  const [status, setStatus] = useState<'idle' | 'loading' | 'success'>('idle');
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormState(prevState => ({ ...prevState, [name]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setStatus('loading');
-    // Simulate API call
-    setTimeout(() => {
-      setStatus('success');
-    }, 1500);
+    
+    const success = await submitToGoogleSheets(formState, 'Quick Quote (Home Page)');
+
+    if (success) {
+        setStatus('success');
+        setFormState({ name: '', phone: '', service: '' });
+    } else {
+        setStatus('error');
+    }
   };
 
   if (status === 'success') {
@@ -57,6 +64,9 @@ const QuickQuoteForm: React.FC = () => {
             ))}
           </select>
         </div>
+        {status === 'error' && (
+            <p className="text-red-400 text-sm text-center">Something went wrong.</p>
+        )}
         <div>
           <button type="submit" disabled={status === 'loading'} className="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm font-medium text-secondary-foreground bg-secondary hover:bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-secondary disabled:bg-muted disabled:text-muted-foreground">
             {status === 'loading' ? 'Submitting...' : 'Get My Quick Quote'}
