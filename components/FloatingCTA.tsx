@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { PHONE_NUMBER, SOCIAL_LINKS } from '../constants';
 import PhoneIcon from './icons/PhoneIcon';
@@ -5,7 +6,7 @@ import WhatsappIcon from './icons/WhatsappIcon';
 
 const FloatingCTA: React.FC = () => {
   return (
-    <div className="fixed bottom-6 right-6 z-50 flex flex-col items-center space-y-4">
+    <div className="fixed bottom-24 md:bottom-6 right-6 z-50 flex flex-col items-center space-y-4">
       {/* WhatsApp Button */}
       <a
         href={SOCIAL_LINKS.whatsapp}

@@ -1,3 +1,4 @@
+
 import React, { useState, useLayoutEffect, useRef } from 'react';
 import { NavLink } from 'react-router-dom';
 import { SERVICES } from '../constants';
@@ -72,7 +73,7 @@ const SecondaryHeader: React.FC = () => {
       <div className="container mx-auto px-4 relative">
         <div ref={containerRef} className="flex items-center justify-center">
             {/* These are dummy items for measurement purposes only, they are not visible */}
-            <div className="absolute top-0 left-0 opacity-0 pointer-events-none flex">
+            <div className="absolute top-0 left-0 opacity-0 pointer-events-none flex w-0 h-0 overflow-hidden">
                 {SERVICES.map((service, index) => (
                     <a key={service.id} ref={el => { itemsRef.current[index] = el; }} className={navLinkClasses}>
                     {service.title}
