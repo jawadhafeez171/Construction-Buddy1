@@ -202,7 +202,7 @@ export const PROJECTS: Project[] = [
     title: 'Cambridge English High School',
     category: ProjectCategory.INSTITUTIONAL,
     description: 'Construction of the Cambridge English High School, featuring a modern textured facade, spacious corridors, and a central courtyard. The project focused on creating a functional and durable educational environment for students and staff.',
-    coverImage: 'public/School.jpeg',
+    coverImage: '/School.jpeg',
     images: ['/public/School.jpeg', '/public/School 1.jpeg', '/public/School 2.jpeg', '/public/School 3.jpeg', '/public/School 4.jpeg', '/public/School 5.jpeg']
   },
   {
