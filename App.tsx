@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState, useCallback, createContext, useContext } from 'react';
 import { HashRouter, Routes, Route, useLocation, Outlet } from 'react-router-dom';
 import Header from './components/Header';
@@ -21,6 +22,7 @@ import BimPage from './pages/BimPage';
 import HomeConstructionPage from './pages/HomeConstructionPage';
 import CommercialConstructionPage from './pages/CommercialConstructionPage';
 import ComparePackagesPage from './pages/ComparePackagesPage';
+import BottomNav from './components/BottomNav';
 
 // --- Theme Management ---
 type Theme = 'light' | 'dark';
@@ -88,7 +90,7 @@ const PageLayout = () => {
         const path = location.pathname;
         let title = COMPANY_NAME;
         let description = "Your trusted partner for residential, commercial, and institutional construction in Bangalore. We offer a full range of services from architectural design to project completion.";
-        let keywords = "construction company Bangalore, home builders, commercial contractors, interior design, project management";
+        let keywords = "construction company Bangalore, home construction, commercial construction, interior design, waterproofing solutions, BIM services, building contractors, architectural drawings, residential projects";
 
         const setMetaTag = (name: string, content: string) => {
             let element = document.querySelector(`meta[name="${name}"]`);
@@ -191,13 +193,14 @@ const PageLayout = () => {
     }, [location.pathname]);
 
     return (
-        <div className="flex flex-col min-h-screen bg-background text-foreground">
+        <div className="flex flex-col min-h-screen bg-background text-foreground pb-16 md:pb-0">
             <TopBar />
             <Header theme={theme} toggleTheme={toggleTheme} />
             <SecondaryHeader />
             <main className="flex-grow">
                 <Outlet />
             </main>
+            <BottomNav />
             <FloatingCTA />
             <FloatingBuildButton />
             <Footer />

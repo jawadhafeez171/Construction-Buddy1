@@ -65,10 +65,21 @@ const Header: React.FC<HeaderProps> = ({ theme, toggleTheme }) => {
       <div className="bg-background/90 backdrop-blur-sm">
         <div className="container mx-auto px-4">
           <div className="flex justify-between items-center h-20">
-            {/* Logo */}
-            <Link to="/" aria-label={`${COMPANY_NAME} - Home`}>
-              <img src="/logo.png" alt={`${COMPANY_NAME} logo`} className="h-16 w-auto" />
-            </Link>
+            
+            {/* Mobile: Menu Left, Logo Right of it */}
+            <div className="flex items-center gap-2">
+                 <button
+                    onClick={() => setIsOpen(!isOpen)}
+                    className="lg:hidden text-foreground focus:outline-none mr-2"
+                    aria-label="Toggle menu"
+                >
+                    {isOpen ? <XIcon className="h-7 w-7" /> : <MenuIcon className="h-7 w-7" />}
+                </button>
+                
+                <Link to="/" aria-label={`${COMPANY_NAME} - Home`}>
+                    <img src="/assets/logo.png" alt={`${COMPANY_NAME} logo`} className="h-10 md:h-16 w-auto" />
+                </Link>
+            </div>
 
             {/* Desktop Navigation */}
             <nav className="hidden lg:flex items-center space-x-8">
@@ -84,23 +95,19 @@ const Header: React.FC<HeaderProps> = ({ theme, toggleTheme }) => {
               ))}
             </nav>
 
-            {/* CTA & Mobile Menu Button */}
+            {/* CTA & Actions */}
             <div className="flex items-center space-x-2 md:space-x-4">
               <Link to="/referral" className="hidden md:inline-block bg-tertiary text-tertiary-foreground px-4 py-2 rounded-md font-semibold hover:bg-opacity-90 transition-colors">
                 Refer & Earn
               </Link>
-              <a href={`tel:${PHONE_NUMBER}`} className="hidden md:flex items-center bg-secondary text-secondary-foreground px-4 py-2 rounded-md font-semibold hover:bg-opacity-90 transition-colors">
-                <PhoneIcon className="h-5 w-5 mr-2" />
-                {PHONE_NUMBER}
-              </a>
+              
               <ThemeToggleButton theme={theme} toggleTheme={toggleTheme} />
-              <button
-                onClick={() => setIsOpen(!isOpen)}
-                className="lg:hidden text-foreground focus:outline-none"
-                aria-label="Toggle menu"
-              >
-                {isOpen ? <XIcon className="h-7 w-7" /> : <MenuIcon className="h-7 w-7" />}
-              </button>
+              
+              {/* Call Button - Visible on mobile now */}
+              <a href={`tel:${PHONE_NUMBER}`} className="flex items-center bg-secondary text-secondary-foreground px-3 py-2 md:px-4 md:py-2 rounded-md font-semibold hover:bg-opacity-90 transition-colors">
+                <PhoneIcon className="h-5 w-5 md:mr-2" />
+                <span className="hidden md:inline">{PHONE_NUMBER}</span>
+              </a>
             </div>
           </div>
         </div>
@@ -124,10 +131,6 @@ const Header: React.FC<HeaderProps> = ({ theme, toggleTheme }) => {
             <Link to="/referral" onClick={() => setIsOpen(false)} className="mt-4 flex items-center justify-center bg-tertiary text-tertiary-foreground px-4 py-2 rounded-md font-semibold hover:bg-opacity-90 transition-colors">
                 Refer & Earn
             </Link>
-             <a href={`tel:${PHONE_NUMBER}`} className="md:hidden mt-2 flex items-center justify-center bg-secondary text-secondary-foreground px-4 py-2 rounded-md font-semibold hover:bg-opacity-90 transition-colors">
-                <PhoneIcon className="h-5 w-5 mr-2" />
-                {PHONE_NUMBER}
-              </a>
           </nav>
         </div>
       )}

@@ -7,7 +7,7 @@ import WhatsappIcon from './icons/WhatsappIcon';
 const FloatingCTA: React.FC = () => {
   return (
     <div className="fixed bottom-24 md:bottom-6 right-6 z-50 flex flex-col items-center space-y-4">
-      {/* WhatsApp Button */}
+      {/* WhatsApp Button - Positioned above bottom nav on mobile */}
       <a
         href={SOCIAL_LINKS.whatsapp}
         target="_blank"
@@ -18,10 +18,10 @@ const FloatingCTA: React.FC = () => {
         <WhatsappIcon className="h-8 w-8" />
       </a>
       
-      {/* Call Button */}
+      {/* Call Button - Hidden on mobile as it is in the header */}
       <a
         href={`tel:${PHONE_NUMBER}`}
-        className="bg-secondary text-secondary-foreground rounded-full p-4 shadow-lg hover:bg-opacity-90 transition-transform duration-300 hover:scale-110 flex items-center justify-center"
+        className="hidden md:flex bg-secondary text-secondary-foreground rounded-full p-4 shadow-lg hover:bg-opacity-90 transition-transform duration-300 hover:scale-110 items-center justify-center"
         aria-label="Call us"
       >
         <PhoneIcon className="h-8 w-8" />
