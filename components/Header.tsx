@@ -77,7 +77,7 @@ const Header: React.FC<HeaderProps> = ({ theme, toggleTheme }) => {
                 </button>
                 
                 <Link to="/" aria-label={`${COMPANY_NAME} - Home`}>
-                    <img src="/assets/logo.png" alt={`${COMPANY_NAME} logo`} className="h-10 md:h-16 w-auto" />
+                    <img src="/logo.png" alt={`${COMPANY_NAME} logo`} className="h-10 md:h-16 w-auto" />
                 </Link>
             </div>
 
