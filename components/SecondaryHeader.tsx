@@ -102,7 +102,7 @@ const SecondaryHeader: React.FC = () => {
                 More <ChevronDownIcon className="h-4 w-4 ml-1" />
               </button>
               {isDropdownOpen && (
-                <div className="absolute top-full right-0 mt-1 w-64 bg-card rounded-md shadow-lg ring-1 ring-border z-50">
+                <div className="absolute top-full left-1/2 -translate-x-1/2 md:left-auto md:translate-x-0 md:right-0 mt-1 w-64 max-w-[90vw] bg-card rounded-md shadow-lg ring-1 ring-border z-50">
                   <div className="py-1">
                     {hiddenItems.map(service => (
                       <NavLink
