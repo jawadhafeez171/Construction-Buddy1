@@ -14,7 +14,7 @@ const Footer: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
           {/* Company Info */}
           <div className="space-y-4">
-            <img src="/assets/logo.png" alt={`${COMPANY_NAME} logo`} className="h-24 w-auto" />
+            <img src="/logo.png" alt={`${COMPANY_NAME} logo`} className="h-24 w-auto" />
             <p className="text-sm">{ADDRESS}</p>
             <div className="flex space-x-4 mt-4">
               <a href={SOCIAL_LINKS.facebook} target="_blank" rel="noopener noreferrer" className="hover:text-secondary transition-colors"><FacebookIcon className="h-6 w-6" /></a>
