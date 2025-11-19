@@ -203,15 +203,15 @@ export const PROJECTS: Project[] = [
     category: ProjectCategory.INSTITUTIONAL,
     description: 'Construction of the Cambridge English High School, featuring a modern textured facade, spacious corridors, and a central courtyard. The project focused on creating a functional and durable educational environment for students and staff.',
     coverImage: '/School.jpeg',
-    images: ['/public/School.jpeg', '/public/School 1.jpeg', '/public/School 2.jpeg', '/public/School 3.jpeg', '/public/School 4.jpeg', '/public/School 5.jpeg']
+    images: ['/School.jpeg', '/School 1.jpeg', '/School 2.jpeg', '/School 3.jpeg', '/School 4.jpeg', '/School 5.jpeg']
   },
   {
     id: 'grand-mosque-construction',
     title: 'Grand Mosque Construction',
     category: ProjectCategory.INSTITUTIONAL,
     description: 'A large-scale institutional project involving the construction of a grand mosque. The design features traditional Islamic architecture with prominent domes, elegant arches, and intricate facade details. The project showcases our capability in handling complex structural and decorative work.',
-    coverImage: '/6.jpeg',
-    images: ['/6.jpeg', '/7.jpeg', '/8.jpeg']
+    coverImage: '/Madrasa 1.png',
+    images: ['/Madrasa 1.png', '/Madrasa 2.png', '/Mosque 1.png']
   },
   {
     id: 'modern-cubist-residence',
