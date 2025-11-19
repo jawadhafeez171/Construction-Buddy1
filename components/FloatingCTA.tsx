@@ -1,18 +1,33 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import BuildIcon from './icons/BuildIcon';
 
-const FloatingBuildButton: React.FC = () => {
+import React from 'react';
+import { PHONE_NUMBER, SOCIAL_LINKS } from '../constants';
+import PhoneIcon from './icons/PhoneIcon';
+import WhatsappIcon from './icons/WhatsappIcon';
+
+const FloatingCTA: React.FC = () => {
   return (
-    <Link
-      to="/contact"
-      className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 flex items-center justify-center px-6 py-3 bg-secondary text-secondary-foreground rounded-full shadow-lg hover:bg-opacity-90 transition-all duration-300 hover:scale-105 transform whitespace-nowrap"
-      aria-label="Build with us"
-    >
-      <BuildIcon className="h-6 w-6 mr-3" />
-      <span className="font-bold text-lg">Build With Us</span>
-    </Link>
+    <div className="fixed bottom-24 md:bottom-6 right-6 z-50 flex flex-col items-center space-y-4">
+      {/* WhatsApp Button */}
+      <a
+        href={SOCIAL_LINKS.whatsapp}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="bg-[#25D366] text-white rounded-full p-4 shadow-lg hover:bg-opacity-90 transition-transform duration-300 hover:scale-110 flex items-center justify-center"
+        aria-label="Chat on WhatsApp"
+      >
+        <WhatsappIcon className="h-8 w-8" />
+      </a>
+      
+      {/* Call Button */}
+      <a
+        href={`tel:${PHONE_NUMBER}`}
+        className="bg-secondary text-secondary-foreground rounded-full p-4 shadow-lg hover:bg-opacity-90 transition-transform duration-300 hover:scale-110 flex items-center justify-center"
+        aria-label="Call us"
+      >
+        <PhoneIcon className="h-8 w-8" />
+      </a>
+    </div>
   );
 };
 
-export default FloatingBuildButton;
+export default FloatingCTA;
