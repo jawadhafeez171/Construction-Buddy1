@@ -66,8 +66,8 @@ const Header: React.FC<HeaderProps> = ({ theme, toggleTheme }) => {
         <div className="container mx-auto px-4">
           <div className="flex justify-between items-center h-20">
             {/* Logo */}
-            <Link to="/" aria-label={`${COMPANY_NAME} - Home`} className="relative top-2">
-              <img src="/logo.png" alt={`${COMPANY_NAME} logo`} className="h-24 w-auto" />
+            <Link to="/" aria-label={`${COMPANY_NAME} - Home`}>
+              <img src="/assets/logo.png" alt={`${COMPANY_NAME} logo`} className="h-16 w-auto" />
             </Link>
 
             {/* Desktop Navigation */}
