@@ -214,20 +214,12 @@ export const PROJECTS: Project[] = [
     images: ['/Madrasa 1.png', '/Madrasa 2.png', '/Mosque 1.png']
   },
   {
-    id: 'modern-cubist-residence',
-    title: 'Modern Cubist Residence',
+    id: 'modern-elegant-residence-jp-nagar',
+    title: 'Modern Elegant Residence, JP Nagar',
     category: ProjectCategory.RESIDENTIAL,
-    description: 'A contemporary residential building characterized by its striking cubist architecture, combining textured brown panels with clean white surfaces. The design emphasizes geometric forms and provides multiple balconies for outdoor living.',
+    description: 'A stunning contemporary family home in JP Nagar that seamlessly blends modern cubist architecture with elegant traditional elements. This residence features striking geometric forms with textured brown panels and clean white surfaces, complemented by wood-paneled accents and large windows. The design emphasizes both aesthetic appeal and functionality, with multiple balconies for outdoor living and a warm, inviting atmosphere throughout.',
     coverImage: '/Residential 1 render.png',
-    images: ['/Residential 1 render.png']
-  },
-  {
-    id: 'elegant-family-home-jp-nagar',
-    title: 'Elegant Family Home, JP Nagar',
-    category: ProjectCategory.RESIDENTIAL,
-    description: 'A beautifully designed family home in JP Nagar, featuring a blend of modern and traditional elements. The facade includes wood-paneled accents and large windows, creating a warm and inviting atmosphere.',
-    coverImage: '/Residential 1.png',
-    images: ['/Residential 1.png']
+    images: ['/Residential 1 render.png', '/Residential 1.png']
   },
   {
     id: 'residential-project-construction-phases',
