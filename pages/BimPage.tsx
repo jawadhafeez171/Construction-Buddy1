@@ -4,10 +4,7 @@ import { SERVICES } from '../constants';
 import VisualizationIcon from '../components/icons/VisualizationIcon';
 import ClashDetectionIcon from '../components/icons/ClashDetectionIcon';
 import CostSavingsIcon from '../components/icons/CostSavingsIcon';
-import TimelineIcon from '../components/icons/TimelineIcon';
 import UserGroupIcon from '../components/icons/UserGroupIcon';
-
-const service = SERVICES.find(s => s.id === 'building-information-modelling');
 
 const benefits = [
     { icon: VisualizationIcon, title: 'Enhanced Visualization', description: 'Walk through your project in stunning 3D before a single brick is laid. Understand spaces, layouts, and aesthetics with lifelike clarity.' },
@@ -26,7 +23,16 @@ const bimServices = [
 ];
 
 const BimPage: React.FC = () => {
-    if (!service) return <div>Service not found.</div>;
+    const service = SERVICES.find(s => s.id === 'building-information-modelling');
+    
+    if (!service) {
+        return (
+            <div className="container mx-auto px-4 py-16 text-center">
+                <h1 className="text-4xl font-bold">Service not found.</h1>
+                <p className="mt-4 text-muted-foreground">The requested service could not be found.</p>
+            </div>
+        );
+    }
     const otherServices = SERVICES.filter(s => s.id !== service.id);
 
     return (
@@ -89,19 +95,21 @@ const BimPage: React.FC = () => {
                             </section>
 
                             {/* Our Process Section */}
-                            <section>
-                                <h2 className="text-3xl font-bold text-foreground mb-6 text-center">Our Integrated BIM Process</h2>
-                                <div className="relative border-l-2 border-tertiary pl-8">
-                                    {service.process.map((step, index) => (
-                                        <div key={index} className="mb-8 relative">
-                                            <div className="absolute -left-[42px] top-1 w-5 h-5 bg-tertiary rounded-full border-4 border-background"></div>
-                                            <span className="text-sm font-bold text-secondary">STEP {step.step}</span>
-                                            <h3 className="text-xl font-bold text-primary">{step.title}</h3>
-                                            <p className="text-muted-foreground mt-1">{step.description}</p>
-                                        </div>
-                                    ))}
-                                </div>
-                            </section>
+                            {service.process && service.process.length > 0 && (
+                                <section>
+                                    <h2 className="text-3xl font-bold text-foreground mb-6 text-center">Our Integrated BIM Process</h2>
+                                    <div className="relative border-l-2 border-tertiary pl-8">
+                                        {service.process.map((step, index) => (
+                                            <div key={index} className="mb-8 relative">
+                                                <div className="absolute -left-[42px] top-1 w-5 h-5 bg-tertiary rounded-full border-4 border-background"></div>
+                                                <span className="text-sm font-bold text-secondary">STEP {step.step}</span>
+                                                <h3 className="text-xl font-bold text-primary">{step.title}</h3>
+                                                <p className="text-muted-foreground mt-1">{step.description}</p>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </section>
+                            )}
 
                              {/* CTA Section */}
                             <section className="bg-primary text-primary-foreground py-12 px-8 rounded-lg text-center">

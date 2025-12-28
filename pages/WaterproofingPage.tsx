@@ -5,12 +5,9 @@ import BasementIcon from '../components/icons/BasementIcon';
 import RoofIcon from '../components/icons/RoofIcon';
 import BathroomIcon from '../components/icons/BathroomIcon';
 import WallIcon from '../components/icons/WallIcon';
-import CheckIcon from '../components/icons/CheckIcon';
-
-const service = SERVICES.find(s => s.id === 'waterproofing-solutions');
 
 const benefitItems = [
-    { title: 'Prevent Structural Damage', description: 'Protect your building’s foundation and structural steel from the corrosive effects of water.' },
+    { title: 'Prevent Structural Damage', description: "Protect your building's foundation and structural steel from the corrosive effects of water." },
     { title: 'Protect Health', description: 'Eliminate dampness that leads to unhealthy mold, mildew, and allergens.' },
     { title: 'Increase Property Value', description: 'A dry, well-maintained property commands a higher value and is easier to sell.' },
     { title: 'Peace of Mind', description: 'Enjoy the monsoon season without the worry of leaks, seepage, or damp walls.' },
@@ -24,7 +21,16 @@ const serviceItems = [
 ];
 
 const WaterproofingPage: React.FC = () => {
-    if (!service) return <div>Service not found.</div>;
+    const service = SERVICES.find(s => s.id === 'waterproofing-solutions');
+    
+    if (!service) {
+        return (
+            <div className="container mx-auto px-4 py-16 text-center">
+                <h1 className="text-4xl font-bold">Service not found.</h1>
+                <p className="mt-4 text-muted-foreground">The requested service could not be found.</p>
+            </div>
+        );
+    }
     const otherServices = SERVICES.filter(s => s.id !== service.id);
 
     return (
@@ -83,24 +89,26 @@ const WaterproofingPage: React.FC = () => {
 
 
                             {/* Our Process Section */}
-                            <section>
-                                <h2 className="text-3xl font-bold text-foreground mb-6 text-center">Our Scientific 4-Step Process</h2>
-                                <div className="relative border-l-2 border-tertiary pl-8">
-                                    {service.process.map((step, index) => (
-                                        <div key={index} className="mb-8 relative">
-                                            <div className="absolute -left-[42px] top-1 w-5 h-5 bg-tertiary rounded-full border-4 border-background"></div>
-                                            <span className="text-sm font-bold text-secondary">STEP {step.step}</span>
-                                            <h3 className="text-xl font-bold text-primary">{step.title}</h3>
-                                            <p className="text-muted-foreground mt-1">{step.description}</p>
-                                        </div>
-                                    ))}
-                                </div>
-                            </section>
+                            {service.process && service.process.length > 0 && (
+                                <section>
+                                    <h2 className="text-3xl font-bold text-foreground mb-6 text-center">Our Scientific 4-Step Process</h2>
+                                    <div className="relative border-l-2 border-tertiary pl-8">
+                                        {service.process.map((step, index) => (
+                                            <div key={index} className="mb-8 relative">
+                                                <div className="absolute -left-[42px] top-1 w-5 h-5 bg-tertiary rounded-full border-4 border-background"></div>
+                                                <span className="text-sm font-bold text-secondary">STEP {step.step}</span>
+                                                <h3 className="text-xl font-bold text-primary">{step.title}</h3>
+                                                <p className="text-muted-foreground mt-1">{step.description}</p>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </section>
+                            )}
                             
                              {/* Materials Section */}
                             <section>
                                 <h2 className="text-3xl font-bold text-foreground mb-8 text-center">Advanced Technology & Materials</h2>
-                                <p className="text-muted-foreground text-center max-w-3xl mx-auto mb-8">We don't believe in one-size-fits-all solutions. We use a range of high-performance, industry-leading materials to ensure the most effective and durable protection for your specific needs.</p>
+                                <p className="text-muted-foreground text-center max-w-3xl mx-auto mb-8">We don&apos;t believe in one-size-fits-all solutions. We use a range of high-performance, industry-leading materials to ensure the most effective and durable protection for your specific needs.</p>
                                 <div className="flex flex-wrap justify-center gap-4">
                                     <div className="bg-muted text-muted-foreground font-semibold px-4 py-2 rounded-full">Advanced Polymer Membranes</div>
                                     <div className="bg-muted text-muted-foreground font-semibold px-4 py-2 rounded-full">Crystalline Coatings</div>

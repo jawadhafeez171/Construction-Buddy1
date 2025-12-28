@@ -6,6 +6,9 @@ import PackageCard from '../components/PackageCard';
 import ProjectCard from '../components/ProjectCard';
 import QuickQuoteForm from '../components/QuickQuoteForm';
 import ReferralIllustration from '../components/ReferralIllustration';
+import { Testimonials } from '../components/Testimonials';
+import { TrustSignals } from '../components/TrustSignals';
+import { FAQ } from '../components/FAQ';
 import ArrowRightIcon from '../components/icons/ArrowRightIcon';
 import TrustworthyBrandIcon from '../components/icons/TrustworthyBrandIcon';
 import CompetitivePriceIcon from '../components/icons/CompetitivePriceIcon';
@@ -318,6 +321,15 @@ const HomePage: React.FC = () => {
           </div>
         </div>
       </section>
+
+      {/* Trust Signals Section */}
+      <TrustSignals />
+
+      {/* Testimonials Section */}
+      <Testimonials />
+
+      {/* FAQ Section */}
+      <FAQ />
     </div>
   );
 };

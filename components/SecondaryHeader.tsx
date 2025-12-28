@@ -15,6 +15,16 @@ const SecondaryHeader: React.FC = () => {
     const handleResize = () => {
       if (!containerRef.current) return;
       
+      // On desktop (md and above), show all services
+      const isDesktop = window.innerWidth >= 768; // md breakpoint
+      
+      if (isDesktop) {
+        setVisibleItems(SERVICES);
+        setHiddenItems([]);
+        return;
+      }
+      
+      // On mobile/tablet, use the responsive logic
       const containerWidth = containerRef.current.offsetWidth;
       let currentWidth = 0;
       const visible: typeof SERVICES = [];
@@ -43,6 +53,12 @@ const SecondaryHeader: React.FC = () => {
       setHiddenItems(hidden);
     };
 
+    // Initial check - show all services on desktop immediately
+    if (window.innerWidth >= 768) {
+      setVisibleItems(SERVICES);
+      setHiddenItems([]);
+    }
+
     // We need to run this once to get initial measurements
     // A timeout ensures the DOM has settled after first render.
     const timeoutId = setTimeout(handleResize, 100);
@@ -51,9 +67,13 @@ const SecondaryHeader: React.FC = () => {
     if (containerRef.current) {
       observer.observe(containerRef.current);
     }
+
+    // Also listen to window resize events
+    window.addEventListener('resize', handleResize);
     
     return () => {
       clearTimeout(timeoutId);
+      window.removeEventListener('resize', handleResize);
       if (containerRef.current) {
         // eslint-disable-next-line react-hooks/exhaustive-deps
         observer.unobserve(containerRef.current);
@@ -92,8 +112,9 @@ const SecondaryHeader: React.FC = () => {
             </NavLink>
           ))}
           
+          {/* Only show "More" dropdown on mobile/tablet, not on desktop */}
           {hiddenItems.length > 0 && (
-            <div className="relative">
+            <div className="relative md:hidden">
               <button
                 onClick={() => setIsDropdownOpen(!isDropdownOpen)}
                 onBlur={() => setTimeout(() => setIsDropdownOpen(false), 200)}
@@ -102,7 +123,7 @@ const SecondaryHeader: React.FC = () => {
                 More <ChevronDownIcon className="h-4 w-4 ml-1" />
               </button>
               {isDropdownOpen && (
-                <div className="absolute top-full left-1/2 -translate-x-1/2 md:left-auto md:translate-x-0 md:right-0 mt-1 w-64 max-w-[90vw] bg-card rounded-md shadow-lg ring-1 ring-border z-50">
+                <div className="absolute top-full left-1/2 -translate-x-1/2 mt-1 w-64 max-w-[90vw] bg-card rounded-md shadow-lg ring-1 ring-border z-50">
                   <div className="py-1">
                     {hiddenItems.map(service => (
                       <NavLink
