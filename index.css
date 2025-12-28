@@ -1,0 +1,67 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 0 0% 6%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 6%;
+    --primary: 0 0% 6%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 220 89% 61%; /* Blue */
+    --secondary-foreground: 0 0% 100%;
+    --tertiary: 47 100% 50%; /* Yellow #FFC400 */
+    --tertiary-foreground: 0 0% 6%;
+    --accent: 0 0% 6%;
+    --accent-foreground: 0 0% 100%;
+    --muted: 0 0% 95%;
+    --muted-foreground: 0 0% 46%;
+    --border: 0 0% 89%;
+    --input: 0 0% 89%;
+    --destructive: 12 100% 43%;
+    --destructive-foreground: 0 0% 100%;
+    --success: 141 53% 43%;
+    --success-foreground: 0 0% 100%;
+  }
+
+  html.dark {
+    --background: 0 0% 12%;
+    --foreground: 0 0% 95%;
+    --card: 0 0% 12%;
+    --card-foreground: 0 0% 95%;
+    --primary: 0 0% 95%;
+    --primary-foreground: 0 0% 6%;
+    --secondary: 220 89% 61%; /* Blue */
+    --secondary-foreground: 0 0% 100%;
+    --tertiary: 47 100% 50%; /* Yellow #FFC400 */
+    --tertiary-foreground: 0 0% 6%;
+    --accent: 0 0% 6%;
+    --accent-foreground: 0 0% 95%;
+    --muted: 0 0% 18%;
+    --muted-foreground: 0 0% 63%;
+    --border: 0 0% 18%;
+    --input: 0 0% 18%;
+    --destructive: 12 100% 43%;
+    --destructive-foreground: 0 0% 100%;
+    --success: 141 53% 43%;
+    --success-foreground: 0 0% 100%;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Reduced motion support for accessibility */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+

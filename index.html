@@ -7,58 +7,6 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-      :root {
-        --background: 0 0% 100%;
-        --foreground: 0 0% 6%;
-        --card: 0 0% 100%;
-        --card-foreground: 0 0% 6%;
-        --primary: 0 0% 6%;
-        --primary-foreground: 0 0% 100%;
-        --secondary: 220 89% 61%; /* Blue */
-        --secondary-foreground: 0 0% 100%;
-        --tertiary: 47 100% 50%; /* Yellow #FFC400 */
-        --tertiary-foreground: 0 0% 6%;
-        --accent: 0 0% 6%;
-        --accent-foreground: 0 0% 100%;
-        --muted: 0 0% 95%;
-        --muted-foreground: 0 0% 46%;
-        --border: 0 0% 89%;
-        --input: 0 0% 89%;
-        --destructive: 12 100% 43%;
-        --destructive-foreground: 0 0% 100%;
-        --success: 141 53% 43%;
-        --success-foreground: 0 0% 100%;
-      }
-
-      html.dark {
-        --background: 0 0% 12%;
-        --foreground: 0 0% 95%;
-        --card: 0 0% 12%;
-        --card-foreground: 0 0% 95%;
-        --primary: 0 0% 95%;
-        --primary-foreground: 0 0% 6%;
-        --secondary: 220 89% 61%; /* Blue */
-        --secondary-foreground: 0 0% 100%;
-        --tertiary: 47 100% 50%; /* Yellow #FFC400 */
-        --tertiary-foreground: 0 0% 6%;
-        --accent: 0 0% 6%;
-        --accent-foreground: 0 0% 95%;
-        --muted: 0 0% 18%;
-        --muted-foreground: 0 0% 63%;
-        --border: 0 0% 18%;
-        --input: 0 0% 18%;
-        --destructive: 12 100% 43%;
-        --destructive-foreground: 0 0% 100%;
-        --success: 141 53% 43%;
-        --success-foreground: 0 0% 100%;
-      }
-
-      html {
-        scroll-behavior: smooth;
-      }
-    </style>
     <script>
       // Prevents flash of incorrect theme
       (function() {
@@ -69,86 +17,6 @@
           document.documentElement.classList.remove('dark');
         }
       })();
-    </script>
-    <script>
-      tailwind.config = {
-        darkMode: 'class',
-        theme: {
-          extend: {
-            fontFamily: {
-              sans: ['Inter', 'sans-serif'],
-            },
-            colors: {
-              border: 'hsl(var(--border))',
-              input: 'hsl(var(--input))',
-              background: 'hsl(var(--background))',
-              foreground: 'hsl(var(--foreground))',
-              primary: {
-                DEFAULT: 'hsl(var(--primary))',
-                foreground: 'hsl(var(--primary-foreground))',
-              },
-              secondary: {
-                DEFAULT: 'hsl(var(--secondary))',
-                foreground: 'hsl(var(--secondary-foreground))',
-              },
-              tertiary: {
-                DEFAULT: 'hsl(var(--tertiary))',
-                foreground: 'hsl(var(--tertiary-foreground))',
-              },
-              destructive: {
-                DEFAULT: 'hsl(var(--destructive))',
-                foreground: 'hsl(var(--destructive-foreground))',
-              },
-              success: {
-                DEFAULT: 'hsl(var(--success))',
-                foreground: 'hsl(var(--success-foreground))',
-              },
-              muted: {
-                DEFAULT: 'hsl(var(--muted))',
-                foreground: 'hsl(var(--muted-foreground))',
-              },
-              accent: {
-                DEFAULT: 'hsl(var(--accent))',
-                foreground: 'hsl(var(--accent-foreground))',
-              },
-              card: {
-                DEFAULT: 'hsl(var(--card))',
-                foreground: 'hsl(var(--card-foreground))',
-              },
-              // Legacy names for easier migration
-              'text-primary': 'hsl(var(--foreground))',
-              'text-secondary': 'hsl(var(--muted-foreground))',
-            },
-            textShadow: {
-              'md': '2px 2px 8px rgba(0, 0, 0, 0.7)',
-            },
-            keyframes: {
-              fadeInUp: {
-                'from': { opacity: '0', transform: 'translateY(20px)' },
-                'to': { opacity: '1', transform: 'translateY(0)' },
-              },
-              fadeIn: {
-                'from': { opacity: '0' },
-                'to': { opacity: '1' },
-              },
-              pulseVertical: {
-                '0%, 100%': { opacity: '1', transform: 'translateY(0)' },
-                '50%': { opacity: '0.3', transform: 'translateY(8px)' },
-              },
-              float: {
-                '0%, 100%': { transform: 'translateY(0px)' },
-                '50%': { transform: 'translateY(-15px)' },
-              }
-            },
-            animation: {
-              fadeInUp: 'fadeInUp 1s ease-out forwards',
-              fadeIn: 'fadeIn 1s ease-out forwards',
-              'pulse-vertical': 'pulseVertical 2.5s infinite ease-in-out',
-              'float': 'float 5s ease-in-out infinite',
-            }
-          },
-        },
-      }
     </script>
   <script type="importmap">
 {
@@ -161,7 +29,6 @@
   }
 }
 </script>
-<link rel="stylesheet" href="/index.css">
 </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
