@@ -85,7 +85,7 @@ const HomePage: React.FC = () => {
                 </div>
                 
                 {/* Right Form */}
-                <div className="w-full max-w-md lg:w-2/5 opacity-0 animate-fadeIn [animation-delay:800ms]">
+                <div className="w-full max-w-sm lg:max-w-xs opacity-0 animate-fadeIn [animation-delay:800ms]">
                     <QuickQuoteForm />
                 </div>
             </div>
