@@ -36,7 +36,7 @@ const faqs: FAQItem[] = [
   },
   {
     question: 'How do you handle project approvals and permits?',
-    answer: 'We handle all necessary approvals and permits, including BBMP building plan approval, BESCOM electrical approval, and BWSSB water connection approval. This is included in all our construction packages, so you don\'t have to worry about the paperwork.',
+    answer: 'We handle the complete liaison process for all necessary approvals from various departments (BBMP, BESCOM, BWSSB, etc.). However, please note that while we manage the coordination, the actual facilitation fees associated with these approvals are to be borne by the client.',
     category: 'Approvals',
   },
   {
@@ -53,6 +53,17 @@ const faqs: FAQItem[] = [
 
 export const FAQ: React.FC = () => {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [activeCategory, setActiveCategory] = useState<string>('All');
+
+  const categories = ['All', ...Array.from(new Set(faqs.map(f => f.category).filter(Boolean)))];
+
+  const filteredFaqs = faqs.filter(faq => {
+    const matchesSearch = faq.question.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      faq.answer.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesCategory = activeCategory === 'All' || faq.category === activeCategory;
+    return matchesSearch && matchesCategory;
+  });
 
   const toggleFAQ = (index: number) => {
     setOpenIndex(openIndex === index ? null : index);
@@ -62,7 +73,7 @@ export const FAQ: React.FC = () => {
     <section className="py-20 bg-background">
       <div className="container mx-auto px-4">
         <ScrollAnimated animation="fadeInUp">
-          <div className="text-center mb-12">
+          <div className="text-center mb-8">
             <h2 className="text-3xl md:text-4xl font-bold text-foreground">Frequently Asked Questions</h2>
             <p className="mt-2 text-muted-foreground max-w-2xl mx-auto">
               Find answers to common questions about our construction services, process, and packages.
@@ -70,38 +81,76 @@ export const FAQ: React.FC = () => {
           </div>
         </ScrollAnimated>
 
-        <div className="max-w-3xl mx-auto space-y-4">
-          {faqs.map((faq, index) => (
-            <ScrollAnimated
-              key={index}
-              animation="fadeInUp"
-              delay={index * 50}
-            >
-              <div className="bg-card border border-border rounded-lg overflow-hidden hover:shadow-md transition-shadow">
-                <button
-                  onClick={() => toggleFAQ(index)}
-                  className="w-full px-6 py-4 flex items-center justify-between text-left hover:bg-muted/50 transition-colors"
-                  aria-expanded={openIndex === index}
-                >
-                  <span className="font-semibold text-foreground pr-4">{faq.question}</span>
-                  <ChevronDownIcon
-                    className={`h-5 w-5 text-muted-foreground flex-shrink-0 transition-transform duration-300 ${
-                      openIndex === index ? 'rotate-180' : ''
-                    }`}
-                  />
-                </button>
-                <div
-                  className={`overflow-hidden transition-all duration-300 ${
-                    openIndex === index ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+        {/* Search and Categories */}
+        <div className="max-w-3xl mx-auto mb-12 space-y-6">
+          <div className="relative group">
+            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <svg className="h-5 w-5 text-muted-foreground group-focus-within:text-secondary transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
+            </div>
+            <input
+              type="text"
+              placeholder="Search questions..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="block w-full pl-10 pr-3 py-4 border border-border rounded-xl bg-card focus:ring-2 focus:ring-secondary focus:border-secondary outline-none transition-all shadow-sm"
+            />
+          </div>
+
+          <div className="flex flex-wrap justify-center gap-2">
+            {categories.map(category => (
+              <button
+                key={category}
+                onClick={() => setActiveCategory(category || 'All')}
+                className={`px-4 py-2 rounded-full text-sm font-semibold transition-all ${activeCategory === category
+                  ? 'bg-secondary text-secondary-foreground shadow-md'
+                  : 'bg-muted text-muted-foreground hover:bg-muted/80'
                   }`}
-                >
-                  <div className="px-6 pb-4 text-muted-foreground leading-relaxed">
-                    {faq.answer}
+              >
+                {category}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div className="max-w-3xl mx-auto space-y-4">
+          {filteredFaqs.length > 0 ? (
+            filteredFaqs.map((faq, index) => (
+              <ScrollAnimated
+                key={index}
+                animation="fadeInUp"
+                delay={index * 50}
+              >
+                <div className="bg-card border border-border rounded-xl overflow-hidden hover:shadow-lg transition-all duration-300">
+                  <button
+                    onClick={() => toggleFAQ(index)}
+                    className="w-full px-6 py-5 flex items-center justify-between text-left hover:bg-muted/30 transition-colors"
+                    aria-expanded={openIndex === index}
+                  >
+                    <span className="font-bold text-foreground pr-4">{faq.question}</span>
+                    <ChevronDownIcon
+                      className={`h-5 w-5 text-secondary flex-shrink-0 transition-transform duration-500 ${openIndex === index ? 'rotate-180' : ''
+                        }`}
+                    />
+                  </button>
+                  <div
+                    className={`overflow-hidden transition-all duration-500 ease-in-out ${openIndex === index ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+                      }`}
+                  >
+                    <div className="px-6 pb-6 text-muted-foreground leading-relaxed border-t border-border/50 pt-4 mt-1 italic">
+                      {faq.answer}
+                    </div>
                   </div>
                 </div>
-              </div>
-            </ScrollAnimated>
-          ))}
+              </ScrollAnimated>
+            ))
+          ) : (
+            <div className="text-center py-12 text-muted-foreground bg-muted/20 rounded-xl border border-dashed border-border">
+              <p className="text-lg">No questions found matching your search.</p>
+              <button onClick={() => { setSearchQuery(''); setActiveCategory('All'); }} className="mt-2 text-secondary font-semibold hover:underline">Clear all filters</button>
+            </div>
+          )}
         </div>
       </div>
     </section>

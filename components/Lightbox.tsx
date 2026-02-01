@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
-import { LazyImage } from './LazyImage';
-import XIcon from './icons/XIcon';
+import OptimizedImage from './OptimizedImage';
 
 interface LightboxProps {
   images: string[];
@@ -20,8 +19,8 @@ export const Lightbox: React.FC<LightboxProps> = ({
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose();
-      if (e.key === 'ArrowLeft') onPrevious();
       if (e.key === 'ArrowRight') onNext();
+      if (e.key === 'ArrowLeft') onPrevious();
     };
 
     document.addEventListener('keydown', handleKeyDown);
@@ -43,7 +42,9 @@ export const Lightbox: React.FC<LightboxProps> = ({
         className="absolute top-4 right-4 z-10 text-white hover:text-gray-300 transition-colors p-2"
         aria-label="Close lightbox"
       >
-        <XIcon className="h-8 w-8" />
+        <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+        </svg>
       </button>
 
       <div
@@ -65,10 +66,11 @@ export const Lightbox: React.FC<LightboxProps> = ({
 
         {/* Image */}
         <div className="relative w-full h-full flex items-center justify-center">
-          <LazyImage
+          <OptimizedImage
             src={images[currentIndex]}
             alt={`Image ${currentIndex + 1} of ${images.length}`}
             className="max-w-full max-h-full object-contain"
+            loading="eager"
           />
         </div>
 
@@ -95,4 +97,3 @@ export const Lightbox: React.FC<LightboxProps> = ({
     </div>
   );
 };
-

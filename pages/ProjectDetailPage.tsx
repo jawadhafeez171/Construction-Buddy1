@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { PROJECTS } from '../constants';
-import { LazyImage } from '../components/LazyImage';
+import OptimizedImage from '../components/OptimizedImage';
 import { Lightbox } from '../components/Lightbox';
 import { ScrollAnimated } from '../components/ScrollAnimated';
 
@@ -40,10 +40,11 @@ const ProjectDetailPage: React.FC = () => {
     <div className="bg-background">
       {/* Project Header */}
       <div className="relative h-[50vh] bg-cover bg-center overflow-hidden">
-        <LazyImage
+        <OptimizedImage
           src={project.coverImage}
           alt={project.title}
           className="absolute inset-0 w-full h-full object-cover"
+          loading="eager"
         />
         <div className="absolute inset-0 bg-primary bg-opacity-60"></div>
         <div className="relative z-10 container mx-auto px-4 h-full flex flex-col justify-center">
@@ -76,10 +77,11 @@ const ProjectDetailPage: React.FC = () => {
                   className="relative overflow-hidden rounded-lg shadow-lg cursor-pointer hover:shadow-xl transition-shadow group"
                   onClick={() => openLightbox(index)}
                 >
-                  <LazyImage
+                  <OptimizedImage
                     src={image}
                     alt={`${project.title} - Image ${index + 1}`}
-                    className="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-110"
+                    className="w-full h-64 object-cover cursor-pointer transition-transform duration-300 hover:scale-105"
+                    loading="lazy"
                   />
                   <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors flex items-center justify-center">
                     <svg className="w-12 h-12 text-white opacity-0 group-hover:opacity-100 transition-opacity" fill="none" viewBox="0 0 24 24" stroke="currentColor">

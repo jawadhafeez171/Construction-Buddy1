@@ -30,7 +30,7 @@ export const SERVICES: Service[] = [
       { step: 1, title: 'Initial Consultation', description: 'Understanding your vision and functional requirements for the project.' },
       { step: 2, title: 'Conceptual Design', description: 'Creating initial architectural concepts and structural schemes.' },
       { step: 3, title: 'Detailed Design & Engineering', description: 'Developing final drawings with precise engineering calculations.' },
-      { step: 4, title: 'Permit & Construction Documents', description: 'Finalizing the complete set of drawings ready for approval and construction.' }
+      { step: 4, title: 'Permit & Construction Documents', description: 'Finalizing the complete set of drawings ready for approval and construction. (Facilitation fees by client)' }
     ],
     whyChooseUs: 'Our integrated design process ensures a cohesive and optimized plan, saving you time and money by preventing costly on-site modifications.'
   },
@@ -46,7 +46,8 @@ export const SERVICES: Service[] = [
       'Major Renovations and Additions',
       'High-Quality Material Sourcing',
       'End-to-end Project Management',
-      'Transparent Budgeting and Timelines'
+      'Transparent Budgeting and Timelines',
+      'Dept. Approvals (Facilitation fees by client)'
     ],
     process: [
       { step: 1, title: 'Pre-construction & Planning', description: 'Finalizing plans, budgets, and securing permits.' },
