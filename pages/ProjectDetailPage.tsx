@@ -1,13 +1,26 @@
 import React, { useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import { PROJECTS } from '../constants';
 import OptimizedImage from '../components/OptimizedImage';
 import { Lightbox } from '../components/Lightbox';
 import { ScrollAnimated } from '../components/ScrollAnimated';
+import { useSwipe } from '../hooks/useSwipe';
 
 const ProjectDetailPage: React.FC = () => {
   const { projectId } = useParams<{ projectId: string }>();
+  const navigate = useNavigate();
   const project = PROJECTS.find(p => p.id === projectId);
+
+  // Find current project index for navigation
+  const currentIndex = PROJECTS.findIndex(p => p.id === projectId);
+  const prevProject = currentIndex > 0 ? PROJECTS[currentIndex - 1] : PROJECTS[PROJECTS.length - 1];
+  const nextProject = currentIndex < PROJECTS.length - 1 ? PROJECTS[currentIndex + 1] : PROJECTS[0];
+
+  const { onTouchStart, onTouchMove, onTouchEnd } = useSwipe({
+    onSwipeLeft: () => navigate(`/projects/${nextProject.id}`),
+    onSwipeRight: () => navigate(`/projects/${prevProject.id}`),
+  });
+
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
@@ -37,7 +50,12 @@ const ProjectDetailPage: React.FC = () => {
   };
 
   return (
-    <div className="bg-background">
+    <div
+      className="bg-background min-h-screen"
+      onTouchStart={onTouchStart}
+      onTouchMove={onTouchMove}
+      onTouchEnd={onTouchEnd}
+    >
       {/* Project Header */}
       <div className="relative h-[50vh] bg-cover bg-center overflow-hidden">
         <OptimizedImage

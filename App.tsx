@@ -9,9 +9,18 @@ import { COMPANY_NAME, SERVICES, PROJECTS } from './constants';
 import FloatingBuildButton from './components/FloatingBuildButton';
 import BottomNav from './components/BottomNav';
 import { ErrorBoundary } from './components/ErrorBoundary';
-import { ToastProvider } from './contexts/ToastContext';
 import { ProjectCardSkeleton, CardSkeleton } from './components/Skeleton';
 import { Breadcrumbs } from './components/Breadcrumbs';
+import PageTransition from './components/PageTransition';
+import { useKeyboardShortcuts } from './hooks/useKeyboardShortcuts';
+import { ThemeProvider, useTheme } from './contexts/ThemeContext';
+import { ToastProvider } from './contexts/ToastContext'; // Restore this import
+import { PullToRefresh } from './components/PullToRefresh';
+
+// Lazy load heavy components for better performance
+const BuildModal = lazy(() => import('./components/BuildModal'));
+const WhatsAppButton = lazy(() => import('./components/WhatsAppButton'));
+const InstallPrompt = lazy(() => import('./components/InstallPrompt'));
 
 // Lazy load pages for code splitting
 const HomePage = lazy(() => import('./pages/HomePage'));
@@ -29,6 +38,8 @@ const HomeConstructionPage = lazy(() => import('./pages/HomeConstructionPage'));
 const CommercialConstructionPage = lazy(() => import('./pages/CommercialConstructionPage'));
 const ComparePackagesPage = lazy(() => import('./pages/ComparePackagesPage'));
 const CostCalculatorPage = lazy(() => import('./pages/CostCalculatorPage'));
+const BlogsPage = lazy(() => import('./pages/BlogsPage'));
+const ServicesPage = lazy(() => import('./pages/ServicesPage'));
 
 // Loading fallback component
 const PageLoader = () => (
@@ -40,52 +51,7 @@ const PageLoader = () => (
   </div>
 );
 
-// --- Theme Management ---
-type Theme = 'light' | 'dark';
-interface ThemeContextType {
-  theme: Theme;
-  toggleTheme: () => void;
-}
-const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
-export const useTheme = () => {
-  const context = useContext(ThemeContext);
-  if (context === undefined) {
-    throw new Error('useTheme must be used within a ThemeProvider');
-  }
-  return context;
-}
-
-const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [theme, setTheme] = useState<Theme>('light');
-
-  useEffect(() => {
-    const storedTheme = localStorage.getItem('theme') as Theme | null;
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    const initialTheme = storedTheme || (prefersDark ? 'dark' : 'light');
-    setTheme(initialTheme);
-  }, []);
-
-  useEffect(() => {
-    if (theme === 'dark') {
-      document.documentElement.classList.add('dark');
-      localStorage.setItem('theme', 'dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-      localStorage.setItem('theme', 'light');
-    }
-  }, [theme]);
-
-  const toggleTheme = useCallback(() => {
-    setTheme(prevTheme => prevTheme === 'light' ? 'dark' : 'light');
-  }, []);
-
-  return (
-    <ThemeContext.Provider value={{ theme, toggleTheme }}>
-      {children}
-    </ThemeContext.Provider>
-  );
-};
-// --- End Theme Management ---
+// --- Theme Management Moved to contexts/ThemeContext.tsx ---
 
 
 const ScrollToTop = () => {
@@ -100,12 +66,11 @@ const ScrollToTop = () => {
 
 import PageProgressBar from './components/PageProgressBar';
 import { ModalProvider } from './contexts/ModalContext';
-import BuildModal from './components/BuildModal';
-import WhatsAppButton from './components/WhatsAppButton';
 
 const PageLayout = () => {
   const location = useLocation();
   const { theme, toggleTheme } = useTheme();
+  useKeyboardShortcuts();
 
   useEffect(() => {
     const path = location.pathname;
@@ -124,13 +89,18 @@ const PageLayout = () => {
       <SecondaryHeader />
       <Breadcrumbs />
       <main id="main-content" className="flex-grow">
-        <Outlet />
+        <PullToRefresh>
+          <PageTransition>
+            <Outlet />
+          </PageTransition>
+        </PullToRefresh>
       </main>
       <BottomNav />
       <FloatingBuildButton />
       <WhatsAppButton />
       <Footer />
       <BuildModal />
+      <InstallPrompt />
     </div>
   )
 }
@@ -161,8 +131,11 @@ const App: React.FC = () => {
                     <Route path="/packages" element={<PackagesPage />} />
                     <Route path="/compare-packages" element={<ComparePackagesPage />} />
                     <Route path="/cost-calculator" element={<CostCalculatorPage />} />
+                    <Route path="/cost-calculator" element={<CostCalculatorPage />} />
+                    <Route path="/blogs" element={<BlogsPage />} />
                     <Route path="/contact" element={<ContactPage />} />
                     <Route path="/referral" element={<ReferralPage />} />
+                    <Route path="/services" element={<ServicesPage />} />
                     <Route path="/services/interiors" element={<InteriorsPage />} />
                     <Route path="/services/architectural-structural-drawings" element={<ArchitecturalDrawingsPage />} />
                     <Route path="/services/waterproofing-solutions" element={<WaterproofingPage />} />

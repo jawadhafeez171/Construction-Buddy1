@@ -74,7 +74,7 @@ const HomePage: React.FC = () => {
             {/* Left Content */}
             <div className="lg:w-3/5 text-center lg:text-left">
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight tracking-tight text-white text-shadow-md animate-fadeInUp opacity-0 [animation-delay:200ms]">
-                Building Your <span className="text-tertiary">Dream Home</span>,
+                Building Your <span className="text-transparent bg-clip-text bg-gradient-to-r from-secondary to-tertiary">Dream Home</span>,
                 <br className="hidden lg:block" /> the Right Way
               </h1>
               <p className="mt-6 text-lg md:text-xl text-white/90 max-w-2xl mx-auto lg:mx-0 text-shadow-md animate-fadeInUp opacity-0 [animation-delay:400ms]">
@@ -85,13 +85,13 @@ const HomePage: React.FC = () => {
                   onClick={openBuildModal}
                   className="w-full sm:w-auto"
                 >
-                  <span className="w-full sm:w-auto text-center block py-3 px-8 rounded-md font-bold text-lg bg-secondary text-secondary-foreground cursor-pointer">
-                    Start Building
+                  <span className="w-full sm:w-auto text-center block py-3 px-8 rounded-md font-bold text-lg text-white bg-gradient-to-r from-secondary to-tertiary cursor-pointer transition-transform duration-300 hover:scale-105 hover:-translate-y-1 shadow-lg hover:shadow-orange-500/50">
+                    Get Free Estimate
                   </span>
                 </MagneticButton>
                 <Link to="/projects" className="w-full sm:w-auto">
                   <MagneticButton className="w-full">
-                    <span className="w-full sm:w-auto text-center block py-3 px-8 rounded-md font-bold text-lg bg-white/20 text-white backdrop-blur-sm border border-white/30 cursor-pointer">
+                    <span className="w-full sm:w-auto text-center block py-3 px-8 rounded-md font-bold text-lg bg-transparent border-2 border-white text-white backdrop-blur-sm cursor-pointer transition-transform duration-300 hover:bg-white/10 hover:scale-105 hover:-translate-y-1">
                       View Our Work
                     </span>
                   </MagneticButton>
@@ -125,18 +125,35 @@ const HomePage: React.FC = () => {
               />
             </div>
             <div className="animate-fadeInUp opacity-0 [animation-delay:400ms]">
-              <span className="text-sm font-bold uppercase text-secondary tracking-wider">About Us</span>
+              <span className="text-sm font-bold uppercase text-transparent bg-clip-text bg-gradient-to-r from-secondary to-tertiary tracking-wider">About Us</span>
               <h2 className="mt-2 text-3xl md:text-4xl font-bold text-foreground">
                 Your Trusted Partner in Construction
               </h2>
               <p className="mt-4 text-muted-foreground leading-relaxed">
                 Construction Buddy is a cornerstone of quality construction in Bangalore. We are a team of passionate engineers, architects, and project managers dedicated to turning your vision into a reality. Our commitment to quality craftsmanship, transparent processes, and client satisfaction is the foundation of everything we build.
               </p>
+
+              {/* Key Stats */}
+              <div className="grid grid-cols-3 gap-6 mt-8 border-y border-border py-6">
+                <div className="text-center">
+                  <p className="text-3xl font-bold text-secondary">150+</p>
+                  <p className="text-sm text-muted-foreground uppercase tracking-wide mt-1">Projects</p>
+                </div>
+                <div className="text-center">
+                  <p className="text-3xl font-bold text-secondary">15+</p>
+                  <p className="text-sm text-muted-foreground uppercase tracking-wide mt-1">Years Exp</p>
+                </div>
+                <div className="text-center">
+                  <p className="text-3xl font-bold text-secondary">100%</p>
+                  <p className="text-sm text-muted-foreground uppercase tracking-wide mt-1">Satisfaction</p>
+                </div>
+              </div>
+
               <Link
                 to="/contact"
-                className="mt-10 inline-block bg-secondary text-secondary-foreground font-bold py-3 px-8 rounded-md hover:bg-opacity-90 transition-transform duration-300 hover:scale-105"
+                className="mt-10 inline-block bg-secondary text-secondary-foreground font-bold py-3 px-8 rounded-md hover:bg-opacity-90 transition-all duration-300 hover:scale-105 hover:-translate-y-1"
               >
-                Get To Know Us
+                Meet Our Team
               </Link>
             </div>
           </div>
@@ -155,6 +172,11 @@ const HomePage: React.FC = () => {
               <HomeServiceCard key={service.id} service={service} />
             ))}
           </div>
+          <div className="text-center mt-12">
+            <Link to="/services" className="inline-block border-2 border-primary text-primary font-bold py-3 px-8 rounded-md hover:bg-primary hover:text-primary-foreground transition-all duration-300">
+              View All Services
+            </Link>
+          </div>
         </div>
       </section>
 
@@ -172,7 +194,7 @@ const HomePage: React.FC = () => {
             ))}
           </div>
           <div className="text-center mt-12">
-            <Link to="/compare-packages" className="font-semibold text-primary-foreground/90 hover:text-white underline transition-colors">
+            <Link to="/compare-packages" className="inline-block border-2 border-white/50 text-white font-bold py-3 px-8 rounded-md hover:bg-white hover:text-primary transition-all duration-300 hover:scale-105">
               Compare All Package Features
             </Link>
           </div>
@@ -186,12 +208,12 @@ const HomePage: React.FC = () => {
             <h2 className="text-3xl md:text-4xl font-bold text-foreground">Our Simple 4-Step Process</h2>
             <p className="mt-2 text-muted-foreground max-w-2xl mx-auto">We've streamlined our process to ensure a smooth and efficient journey from start to finish.</p>
           </div>
-          <div className="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-0">
+          <div className="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-0 mb-12">
             {processSteps.map((step, index) => (
               <React.Fragment key={step.number}>
-                <div className="flex flex-col items-center p-4 max-w-[250px] transition-transform duration-300 hover:-translate-y-2">
+                <div className="flex flex-col items-center p-4 max-w-[250px] transition-transform duration-300 hover:-translate-y-2 group">
                   <StepIcon number={step.number} />
-                  <h3 className="text-xl font-bold mb-2">{step.title}</h3>
+                  <h3 className="text-xl font-bold mb-2 group-hover:text-secondary transition-colors">{step.title}</h3>
                   <p className="text-muted-foreground">{step.description}</p>
                 </div>
                 {index < processSteps.length - 1 && (
@@ -201,6 +223,13 @@ const HomePage: React.FC = () => {
                 )}
               </React.Fragment>
             ))}
+          </div>
+          <div className="text-center">
+            <MagneticButton onClick={openBuildModal} className="inline-block">
+              <span className="inline-block bg-tertiary text-tertiary-foreground font-bold py-3 px-8 rounded-md hover:bg-tertiary/90 transition-transform duration-300 hover:scale-105 hover:-translate-y-1 cursor-pointer">
+                Start Your Journey Today
+              </span>
+            </MagneticButton>
           </div>
         </div>
       </section>
@@ -218,7 +247,7 @@ const HomePage: React.FC = () => {
             ))}
           </div>
           <div className="text-center mt-12">
-            <Link to="/projects" className="bg-secondary text-secondary-foreground font-bold py-3 px-8 rounded-md hover:bg-secondary/90 transition-colors">
+            <Link to="/projects" className="inline-block bg-secondary text-secondary-foreground font-bold py-3 px-8 rounded-md hover:bg-secondary/90 transition-all duration-300 hover:scale-105 hover:-translate-y-1">
               View All Projects
             </Link>
           </div>
@@ -232,44 +261,44 @@ const HomePage: React.FC = () => {
             <h2 className="text-3xl md:text-4xl font-bold text-foreground">Why Choose Us</h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 text-center">
-            <div className="bg-card p-6 rounded-lg shadow-md transition-all duration-300 hover:shadow-xl hover:-translate-y-2 border border-border flex flex-col items-center">
+            <div className="bg-card p-6 rounded-lg shadow-md transition-all duration-300 hover:shadow-xl hover:-translate-y-2 border border-border flex flex-col items-center group">
               <FeatureIcon><svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg></FeatureIcon>
-              <h3 className="text-xl font-bold mb-2">Quality Assurance</h3>
+              <h3 className="text-xl font-bold mb-2 group-hover:text-secondary transition-colors">Quality Assurance</h3>
               <p className="text-muted-foreground">We use only the best materials and craftsmanship to ensure lasting quality.</p>
             </div>
-            <div className="bg-card p-6 rounded-lg shadow-md transition-all duration-300 hover:shadow-xl hover:-translate-y-2 border border-border flex flex-col items-center">
+            <div className="bg-card p-6 rounded-lg shadow-md transition-all duration-300 hover:shadow-xl hover:-translate-y-2 border border-border flex flex-col items-center group">
               <FeatureIcon><svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg></FeatureIcon>
-              <h3 className="text-xl font-bold mb-2">On-Time Delivery</h3>
+              <h3 className="text-xl font-bold mb-2 group-hover:text-secondary transition-colors">On-Time Delivery</h3>
               <p className="text-muted-foreground">Our efficient project management guarantees your project is completed on schedule.</p>
             </div>
-            <div className="bg-card p-6 rounded-lg shadow-md transition-all duration-300 hover:shadow-xl hover:-translate-y-2 border border-border flex flex-col items-center">
+            <div className="bg-card p-6 rounded-lg shadow-md transition-all duration-300 hover:shadow-xl hover:-translate-y-2 border border-border flex flex-col items-center group">
               <FeatureIcon><svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg></FeatureIcon>
-              <h3 className="text-xl font-bold mb-2">Transparent Pricing</h3>
+              <h3 className="text-xl font-bold mb-2 group-hover:text-secondary transition-colors">Transparent Pricing</h3>
               <p className="text-muted-foreground">We provide clear, upfront pricing with no hidden charges.</p>
             </div>
-            <div className="bg-card p-6 rounded-lg shadow-md transition-all duration-300 hover:shadow-xl hover:-translate-y-2 border border-border flex flex-col items-center">
+            <div className="bg-card p-6 rounded-lg shadow-md transition-all duration-300 hover:shadow-xl hover:-translate-y-2 border border-border flex flex-col items-center group">
               <FeatureIcon><svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.653-.122-1.274-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.653.122-1.274.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" /></svg></FeatureIcon>
-              <h3 className="text-xl font-bold mb-2">Expert Team</h3>
+              <h3 className="text-xl font-bold mb-2 group-hover:text-secondary transition-colors">Expert Team</h3>
               <p className="text-muted-foreground">Our skilled professionals are dedicated to bringing your vision to life.</p>
             </div>
-            <div className="bg-card p-6 rounded-lg shadow-md transition-all duration-300 hover:shadow-xl hover:-translate-y-2 border border-border flex flex-col items-center">
+            <div className="bg-card p-6 rounded-lg shadow-md transition-all duration-300 hover:shadow-xl hover:-translate-y-2 border border-border flex flex-col items-center group">
               <FeatureIcon><TrustworthyBrandIcon className="h-8 w-8" /></FeatureIcon>
-              <h3 className="text-xl font-bold mb-2">Trustworthy Brand</h3>
+              <h3 className="text-xl font-bold mb-2 group-hover:text-secondary transition-colors">Trustworthy Brand</h3>
               <p className="text-muted-foreground">Building trust with every brick, ensuring reliability and excellence in all projects.</p>
             </div>
-            <div className="bg-card p-6 rounded-lg shadow-md transition-all duration-300 hover:shadow-xl hover:-translate-y-2 border border-border flex flex-col items-center">
+            <div className="bg-card p-6 rounded-lg shadow-md transition-all duration-300 hover:shadow-xl hover:-translate-y-2 border border-border flex flex-col items-center group">
               <FeatureIcon><CompetitivePriceIcon className="h-8 w-8" /></FeatureIcon>
-              <h3 className="text-xl font-bold mb-2">Competitive Prices</h3>
+              <h3 className="text-xl font-bold mb-2 group-hover:text-secondary transition-colors">Competitive Prices</h3>
               <p className="text-muted-foreground">Offering the best value for your investment with fair and competitive pricing.</p>
             </div>
-            <div className="bg-card p-6 rounded-lg shadow-md transition-all duration-300 hover:shadow-xl hover:-translate-y-2 border border-border flex flex-col items-center">
+            <div className="bg-card p-6 rounded-lg shadow-md transition-all duration-300 hover:shadow-xl hover:-translate-y-2 border border-border flex flex-col items-center group">
               <FeatureIcon><HassleFreeIcon className="h-8 w-8" /></FeatureIcon>
-              <h3 className="text-xl font-bold mb-2">Hassle-Free Service</h3>
+              <h3 className="text-xl font-bold mb-2 group-hover:text-secondary transition-colors">Hassle-Free Service</h3>
               <p className="text-muted-foreground">Enjoy a seamless and stress-free experience from initial consultation to final handover.</p>
             </div>
-            <div className="bg-card p-6 rounded-lg shadow-md transition-all duration-300 hover:shadow-xl hover:-translate-y-2 border border-border flex flex-col items-center">
+            <div className="bg-card p-6 rounded-lg shadow-md transition-all duration-300 hover:shadow-xl hover:-translate-y-2 border border-border flex flex-col items-center group">
               <FeatureIcon><ProfessionalProjectManagementIcon className="h-8 w-8" /></FeatureIcon>
-              <h3 className="text-xl font-bold mb-2">Professional Project Management</h3>
+              <h3 className="text-xl font-bold mb-2 group-hover:text-secondary transition-colors">Professional Project Management</h3>
               <p className="text-muted-foreground">Our expert team ensures your project runs smoothly, on time, and within budget.</p>
             </div>
           </div>
@@ -323,7 +352,7 @@ const HomePage: React.FC = () => {
 
               <Link
                 to="/referral"
-                className="mt-10 inline-block bg-secondary text-secondary-foreground font-bold py-3 px-8 rounded-md hover:bg-opacity-90 transition-transform duration-300 hover:scale-105"
+                className="mt-10 inline-block bg-secondary text-secondary-foreground font-bold py-3 px-8 rounded-md hover:bg-opacity-90 transition-transform duration-300 hover:scale-105 hover:-translate-y-1"
               >
                 Refer Now
               </Link>

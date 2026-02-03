@@ -70,6 +70,11 @@ export default {
         float: {
           '0%, 100%': { transform: 'translateY(0px)' },
           '50%': { transform: 'translateY(-15px)' },
+        },
+        shine: {
+          '0%': { left: '-100%', opacity: '0' },
+          '50%': { opacity: '0.5' },
+          '100%': { left: '100%', opacity: '0' },
         }
       },
       animation: {
@@ -77,6 +82,8 @@ export default {
         fadeIn: 'fadeIn 1s ease-out forwards',
         'pulse-vertical': 'pulseVertical 2.5s infinite ease-in-out',
         'float': 'float 5s ease-in-out infinite',
+        'shine': 'shine 2s infinite',
+        'spin-slow': 'spin 8s linear infinite',
       }
     },
   },

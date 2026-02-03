@@ -6,6 +6,7 @@ import FacebookIcon from './icons/FacebookIcon';
 import InstagramIcon from './icons/InstagramIcon';
 import WhatsappIcon from './icons/WhatsappIcon';
 import YoutubeIcon from './icons/YoutubeIcon';
+import { useTheme } from '../contexts/ThemeContext';
 
 const Footer: React.FC = () => {
   return (
@@ -59,12 +60,31 @@ const Footer: React.FC = () => {
         </div>
       </div>
       <div className="bg-foreground py-4">
-        <div className="container mx-auto px-4 text-center text-sm text-background/70">
-          &copy; {new Date().getFullYear()} {COMPANY_NAME}. All Rights Reserved.
+        <div className="container mx-auto px-4 flex flex-col md:flex-row items-center justify-between text-sm text-background/70">
+          <div>&copy; {new Date().getFullYear()} {COMPANY_NAME}. All Rights Reserved.</div>
+          <div className="mt-2 md:mt-0">
+            <HighContrastToggle />
+          </div>
         </div>
       </div>
     </footer>
   );
 };
+
+const HighContrastToggle = () => {
+  const { highContrast, toggleHighContrast } = useTheme();
+  return (
+    <button
+      onClick={toggleHighContrast}
+      className={`flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium transition-colors ${highContrast ? 'bg-yellow-400 text-black' : 'bg-background/20 text-background hover:bg-background/30'}`}
+      aria-label="Toggle High Contrast Mode"
+    >
+      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+      </svg>
+      {highContrast ? 'High Contrast ON' : 'High Contrast OFF'}
+    </button>
+  )
+}
 
 export default Footer;

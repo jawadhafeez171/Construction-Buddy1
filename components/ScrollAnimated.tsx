@@ -1,5 +1,5 @@
 import React from 'react';
-import { useScrollAnimation } from '../hooks/useScrollAnimation';
+import { motion } from 'framer-motion';
 
 interface ScrollAnimatedProps {
   children: React.ReactNode;
@@ -7,8 +7,8 @@ interface ScrollAnimatedProps {
   animation?: 'fadeInUp' | 'fadeIn' | 'slideUp' | 'slideLeft' | 'slideRight' | 'scale';
   delay?: number;
   duration?: number;
-  threshold?: number;
-  triggerOnce?: boolean;
+  viewportAmount?: number;
+  once?: boolean;
 }
 
 export const ScrollAnimated: React.FC<ScrollAnimatedProps> = ({
@@ -16,54 +16,92 @@ export const ScrollAnimated: React.FC<ScrollAnimatedProps> = ({
   className = '',
   animation = 'fadeInUp',
   delay = 0,
-  duration = 600,
-  threshold = 0.1,
-  triggerOnce = true,
+  duration = 0.6,
+  viewportAmount = 0.2,
+  once = true,
 }) => {
-  const { ref, isVisible } = useScrollAnimation({ threshold, triggerOnce });
-
-  const animations = {
+  const variants = {
     fadeInUp: {
-      initial: 'opacity-0 translate-y-8',
-      animate: 'opacity-100 translate-y-0',
+      hidden: { opacity: 0, y: 30 },
+      visible: { opacity: 1, y: 0 },
     },
     fadeIn: {
-      initial: 'opacity-0',
-      animate: 'opacity-100',
+      hidden: { opacity: 0 },
+      visible: { opacity: 1 },
     },
     slideUp: {
-      initial: 'opacity-0 translate-y-12',
-      animate: 'opacity-100 translate-y-0',
+      hidden: { opacity: 0, y: 50 },
+      visible: { opacity: 1, y: 0 },
     },
     slideLeft: {
-      initial: 'opacity-0 translate-x-12',
-      animate: 'opacity-100 translate-x-0',
+      hidden: { opacity: 0, x: 50 },
+      visible: { opacity: 1, x: 0 },
     },
     slideRight: {
-      initial: 'opacity-0 -translate-x-12',
-      animate: 'opacity-100 translate-x-0',
+      hidden: { opacity: 0, x: -50 },
+      visible: { opacity: 1, x: 0 },
     },
     scale: {
-      initial: 'opacity-0 scale-95',
-      animate: 'opacity-100 scale-100',
+      hidden: { opacity: 0, scale: 0.9 },
+      visible: { opacity: 1, scale: 1 },
     },
   };
 
-  const anim = animations[animation];
-
   return (
-    <div
-      ref={ref as React.RefObject<HTMLDivElement>}
-      className={`transition-all ease-out ${anim.initial} ${
-        isVisible ? anim.animate : ''
-      } ${className}`}
-      style={{
-        transitionDuration: `${duration}ms`,
-        transitionDelay: `${delay}ms`,
-      }}
+    <motion.div
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once, amount: viewportAmount }}
+      transition={{ duration, delay: delay / 1000, ease: 'easeOut' }}
+      variants={variants[animation]}
+      className={className}
     >
       {children}
-    </div>
+    </motion.div>
   );
 };
 
+// Also export a container for staggered children
+export const StaggerContainer: React.FC<{
+  children: React.ReactNode;
+  className?: string;
+  staggerDelay?: number;
+  viewportAmount?: number;
+}> = ({ children, className = '', staggerDelay = 0.1, viewportAmount = 0.1 }) => {
+  return (
+    <motion.div
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: viewportAmount }}
+      transition={{ staggerChildren: staggerDelay }}
+      className={className}
+    >
+      {children}
+    </motion.div>
+  );
+};
+
+export const StaggerItem: React.FC<{
+  children: React.ReactNode;
+  className?: string;
+  animation?: 'fadeInUp' | 'fadeIn';
+}> = ({ children, className = '', animation = 'fadeInUp' }) => {
+  const variants = {
+    fadeInUp: {
+      hidden: { opacity: 0, y: 20 },
+      visible: { opacity: 1, y: 0 },
+    },
+    fadeIn: {
+      hidden: { opacity: 0 },
+      visible: { opacity: 1 },
+    },
+  };
+
+  return (
+    <motion.div variants={variants[animation]} className={className}>
+      {children}
+    </motion.div>
+  );
+};
+
+export default ScrollAnimated;

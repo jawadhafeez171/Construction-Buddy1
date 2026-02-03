@@ -41,8 +41,10 @@ const FloatingBuildButton: React.FC = () => {
           className="relative bg-gradient-to-r from-secondary via-secondary/95 to-secondary/90 text-secondary-foreground rounded-full px-6 md:px-8 py-3 md:py-4 shadow-[0_8px_30px_rgba(59,130,246,0.3)] hover:shadow-[0_12px_40px_rgba(59,130,246,0.5)] transition-all duration-300 hover:scale-105 active:scale-95 flex items-center justify-center gap-3 whitespace-nowrap border-2 border-white/20 hover:border-white/40 backdrop-blur-sm overflow-hidden font-bold text-base md:text-lg"
           aria-label="Build with us - Get a free quote"
         >
-          {/* Animated shine effect */}
-          <div className="absolute inset-0 rounded-full bg-gradient-to-r from-white/0 via-white/25 to-white/0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 transform group-hover:translate-x-full"></div>
+          {/* Continuous Magic Shine */}
+          <div className="absolute top-0 left-0 w-full h-full overflow-hidden rounded-full">
+            <div className="absolute -top-[50%] -left-[50%] w-[200%] h-[200%] bg-gradient-to-r from-transparent via-white/30 to-transparent rotate-45 animate-shine"></div>
+          </div>
 
           {/* Icon with subtle shadow */}
           <BuildHouseIcon className="relative h-6 w-6 md:h-7 md:w-7 drop-shadow-md z-10 transition-transform duration-300 group-hover:scale-110" />

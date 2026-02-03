@@ -60,6 +60,7 @@ const Header: React.FC<HeaderProps> = ({ theme, toggleTheme }) => {
     { name: 'Our Projects', path: '/projects' },
     { name: 'Packages', path: '/packages' },
     { name: 'Cost Calculator', path: '/cost-calculator' },
+    { name: 'Blogs', path: '/blogs' },
     { name: 'Contact', path: '/contact' },
   ];
 
