@@ -32,7 +32,8 @@ export const SERVICES: Service[] = [
       { step: 3, title: 'Detailed Design & Engineering', description: 'Developing final drawings with precise engineering calculations.' },
       { step: 4, title: 'Permit & Construction Documents', description: 'Finalizing the complete set of drawings ready for approval and construction. (Facilitation fees by client)' }
     ],
-    whyChooseUs: 'Our integrated design process ensures a cohesive and optimized plan, saving you time and money by preventing costly on-site modifications.'
+    whyChooseUs: 'Our integrated design process ensures a cohesive and optimized plan, saving you time and money by preventing costly on-site modifications.',
+    cardImage: '/architectural-drawings-card.webp'
   },
   {
     id: 'home-construction',
@@ -55,7 +56,8 @@ export const SERVICES: Service[] = [
       { step: 3, title: 'Framing & Finishing', description: 'Building the structure and completing all interior and exterior finishes.' },
       { step: 4, title: 'Final Handover', description: 'Conducting a final walkthrough and handing over the keys to your new home.' }
     ],
-    whyChooseUs: 'We build homes, not just houses. Our client-focused approach and attention to detail ensure a personal and satisfying home-building experience.'
+    whyChooseUs: 'We build homes, not just houses. Our client-focused approach and attention to detail ensure a personal and satisfying home-building experience.',
+    cardImage: '/home-construction-card.webp'
   },
   {
     id: 'commercial-construction',
@@ -77,7 +79,8 @@ export const SERVICES: Service[] = [
       { step: 3, title: 'Execution & Management', description: 'Managing all on-site activities to ensure quality, safety, and timeliness.' },
       { step: 4, title: 'Commissioning & Turnover', description: 'Ensuring all systems are operational and handing over the completed facility.' }
     ],
-    whyChooseUs: 'We deliver commercial projects on time and on budget, minimizing disruption to your operations and maximizing the value of your investment.'
+    whyChooseUs: 'We deliver commercial projects on time and on budget, minimizing disruption to your operations and maximizing the value of your investment.',
+    cardImage: '/commercial-card.webp'
   },
   {
     id: 'interiors',
@@ -99,7 +102,8 @@ export const SERVICES: Service[] = [
       { step: 3, title: 'Detailed Design & Material Sourcing', description: 'We finalize layouts, select materials, and source furnishings.' },
       { step: 4, title: 'Implementation & Styling', description: 'Our team oversees the execution and adds the final styling touches.' }
     ],
-    whyChooseUs: 'Our client-centric approach ensures a personalized design that is both beautiful and practical, creating a space you’ll love for years to come.'
+    whyChooseUs: 'Our client-centric approach ensures a personalized design that is both beautiful and practical, creating a space you’ll love for years to come.',
+    cardImage: '/interiors-card.webp'
   },
   {
     id: 'waterproofing-solutions',
@@ -121,7 +125,8 @@ export const SERVICES: Service[] = [
       { step: 3, title: 'Surface Preparation & Application', description: 'We meticulously prepare surfaces and apply the chosen waterproofing materials.' },
       { step: 4, title: 'Quality Check & Warranty', description: 'We perform rigorous testing and provide a warranty for our work.' }
     ],
-    whyChooseUs: 'Our scientific approach and use of high-performance materials ensure your property stays dry and protected for years to come.'
+    whyChooseUs: 'Our scientific approach and use of high-performance materials ensure your property stays dry and protected for years to come.',
+    cardImage: '/waterproofing-card.webp'
   },
   {
     id: 'building-information-modelling',
@@ -143,7 +148,8 @@ export const SERVICES: Service[] = [
       { step: 3, title: 'Analysis & Simulation', description: 'We run clash detection, scheduling, and cost analysis using the model.' },
       { step: 4, title: 'Documentation & Handover', description: 'We generate coordinated construction drawings and an as-built model.' }
     ],
-    whyChooseUs: 'Our BIM expertise helps you visualize your project, reduce risks, control costs, and ensure a more predictable and successful outcome.'
+    whyChooseUs: 'Our BIM expertise helps you visualize your project, reduce risks, control costs, and ensure a more predictable and successful outcome.',
+    cardImage: '/bim-card.webp'
   },
 ];
 

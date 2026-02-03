@@ -12,6 +12,7 @@ export interface Service {
     description: string;
   }[];
   whyChooseUs: string;
+  cardImage?: string;
 }
 
 export interface Package {

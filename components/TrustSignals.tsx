@@ -1,5 +1,6 @@
 import React from 'react';
 import { ScrollAnimated } from './ScrollAnimated';
+import SectionHeader from './SectionHeader';
 
 interface Stat {
   value: string;
@@ -52,7 +53,7 @@ interface AnimatedCounterProps {
 }
 
 const AnimatedCounter: React.FC<AnimatedCounterProps> = ({ value, duration = 2000 }) => {
-  const [count, setCount] = React.useState(0);
+  const [count, setCount] = React.useState<number | string>(0);
   const [isVisible, setIsVisible] = React.useState(false);
   const ref = React.useRef<HTMLDivElement>(null);
 
@@ -98,10 +99,10 @@ const AnimatedCounter: React.FC<AnimatedCounterProps> = ({ value, duration = 200
     return () => clearInterval(timer);
   }, [isVisible, value, duration]);
 
-  const displayValue = typeof count === 'number' 
-    ? value.includes('+') ? `${count}+` 
-    : value.includes('%') ? `${count}%`
-    : count.toString()
+  const displayValue = typeof count === 'number'
+    ? value.includes('+') ? `${count}+`
+      : value.includes('%') ? `${count}%`
+        : count.toString()
     : value;
 
   return <span ref={ref}>{displayValue}</span>;
@@ -112,12 +113,10 @@ export const TrustSignals: React.FC = () => {
     <section className="py-20 bg-background">
       <div className="container mx-auto px-4">
         <ScrollAnimated animation="fadeInUp">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground">Our Track Record</h2>
-            <p className="mt-2 text-muted-foreground max-w-2xl mx-auto">
-              Numbers that speak for themselves. Trusted by hundreds of satisfied clients across Bangalore.
-            </p>
-          </div>
+          <SectionHeader
+            title="Our Track Record"
+            description="Numbers that speak for themselves. Trusted by hundreds of satisfied clients across Bangalore."
+          />
         </ScrollAnimated>
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { ScrollAnimated } from './ScrollAnimated';
+import SectionHeader from './SectionHeader';
 import ChevronDownIcon from './icons/ChevronDownIcon';
 
 interface FAQItem {
@@ -73,12 +74,11 @@ export const FAQ: React.FC = () => {
     <section className="py-20 bg-background">
       <div className="container mx-auto px-4">
         <ScrollAnimated animation="fadeInUp">
-          <div className="text-center mb-8">
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground">Frequently Asked Questions</h2>
-            <p className="mt-2 text-muted-foreground max-w-2xl mx-auto">
-              Find answers to common questions about our construction services, process, and packages.
-            </p>
-          </div>
+          <SectionHeader
+            title="Frequently Asked Questions"
+            description="Find answers to common questions about our construction services, process, and packages."
+            className="mb-8 md:mb-8"
+          />
         </ScrollAnimated>
 
         {/* Search and Categories */}

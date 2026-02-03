@@ -9,6 +9,7 @@ import ReferralIllustration from '../components/ReferralIllustration';
 import { Testimonials } from '../components/Testimonials';
 import { TrustSignals } from '../components/TrustSignals';
 import { FAQ } from '../components/FAQ';
+import SectionHeader from '../components/SectionHeader';
 import ArrowRightIcon from '../components/icons/ArrowRightIcon';
 import TrustworthyBrandIcon from '../components/icons/TrustworthyBrandIcon';
 import CompetitivePriceIcon from '../components/icons/CompetitivePriceIcon';
@@ -125,13 +126,13 @@ const HomePage: React.FC = () => {
               />
             </div>
             <div className="animate-fadeInUp opacity-0 [animation-delay:400ms]">
-              <span className="text-sm font-bold uppercase text-transparent bg-clip-text bg-gradient-to-r from-secondary to-tertiary tracking-wider">About Us</span>
-              <h2 className="mt-2 text-3xl md:text-4xl font-bold text-foreground">
-                Your Trusted Partner in Construction
-              </h2>
-              <p className="mt-4 text-muted-foreground leading-relaxed">
-                Construction Buddy is a cornerstone of quality construction in Bangalore. We are a team of passionate engineers, architects, and project managers dedicated to turning your vision into a reality. Our commitment to quality craftsmanship, transparent processes, and client satisfaction is the foundation of everything we build.
-              </p>
+              <SectionHeader
+                badge="About Us"
+                title="Your Trusted Partner in Construction"
+                description="Construction Buddy is a cornerstone of quality construction in Bangalore. We are a team of passionate engineers, architects, and project managers dedicated to turning your vision into a reality. Our commitment to quality craftsmanship, transparent processes, and client satisfaction is the foundation of everything we build."
+                centered={false}
+                className="mb-8 md:mb-8"
+              />
 
               {/* Key Stats */}
               <div className="grid grid-cols-3 gap-6 mt-8 border-y border-border py-6">
@@ -163,13 +164,13 @@ const HomePage: React.FC = () => {
       {/* Core Services Section */}
       <section className="py-20 bg-muted">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground">Explore Our Expertise</h2>
-            <p className="mt-2 text-muted-foreground max-w-2xl mx-auto">From concept to creation, we offer a complete suite of construction services.</p>
-          </div>
+          <SectionHeader
+            title="Explore Our Expertise"
+            description="From concept to creation, we offer a complete suite of construction services."
+          />
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 w-full mx-auto">
-            {SERVICES.map(service => (
-              <HomeServiceCard key={service.id} service={service} />
+            {SERVICES.map((service, index) => (
+              <HomeServiceCard key={service.id} service={service} index={index} />
             ))}
           </div>
           <div className="text-center mt-12">
@@ -184,10 +185,11 @@ const HomePage: React.FC = () => {
       <section className="py-20 bg-primary text-primary-foreground relative overflow-hidden">
         <div className="absolute inset-0 opacity-[0.03] bg-[url('data:image/svg+xml,%3Csvg%20width%3D%2260%22%20height%3D%2260%22%20viewBox%3D%220%200%2060%2060%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%3E%3Cg%20fill%3D%22none%22%20fill-rule%3D%22evenodd%22%3E%3Cg%20fill%3D%22%23ffffff%22%20fill-opacity%3D%221%22%3E%3Cpath%20d%3D%22M36%2034v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6%2034v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6%204V0H4v4H0v2h4v4h2V6h4V4H6z%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')]"></div>
         <div className="container mx-auto px-4 relative z-10">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-primary-foreground">Find the Perfect Plan for Your Project</h2>
-            <p className="mt-2 text-primary-foreground/80 max-w-2xl mx-auto">Transparent pricing with no hidden costs. Choose a package that aligns with your vision and budget.</p>
-          </div>
+          <SectionHeader
+            title="Find the Perfect Plan for Your Project"
+            description="Transparent pricing with no hidden costs. Choose a package that aligns with your vision and budget."
+            lightMode
+          />
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {PACKAGES.map(pkg => (
               <PackageCard key={pkg.name} packageInfo={pkg} />
@@ -204,10 +206,10 @@ const HomePage: React.FC = () => {
       {/* Our Process Section */}
       <section className="py-20 bg-background">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground">Our Simple 4-Step Process</h2>
-            <p className="mt-2 text-muted-foreground max-w-2xl mx-auto">We've streamlined our process to ensure a smooth and efficient journey from start to finish.</p>
-          </div>
+          <SectionHeader
+            title="Our Simple 4-Step Process"
+            description="We've streamlined our process to ensure a smooth and efficient journey from start to finish."
+          />
           <div className="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-0 mb-12">
             {processSteps.map((step, index) => (
               <React.Fragment key={step.number}>
@@ -237,10 +239,10 @@ const HomePage: React.FC = () => {
       {/* Recent Projects Section */}
       <section className="py-20 bg-muted">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground">Our Recent Projects</h2>
-            <p className="mt-2 text-muted-foreground max-w-2xl mx-auto">Take a look at some of our proudest accomplishments.</p>
-          </div>
+          <SectionHeader
+            title="Our Recent Projects"
+            description="Take a look at some of our proudest accomplishments."
+          />
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {PROJECTS.slice(0, 4).map(project => (
               <ProjectCard key={project.id} project={project} />
@@ -257,9 +259,10 @@ const HomePage: React.FC = () => {
       {/* Why Choose Us Section */}
       <section className="py-20 bg-background">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground">Why Choose Us</h2>
-          </div>
+          <SectionHeader
+            title="Why Choose Us"
+            description="Built on a foundation of trust and quality."
+          />
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 text-center">
             <div className="bg-card p-6 rounded-lg shadow-md transition-all duration-300 hover:shadow-xl hover:-translate-y-2 border border-border flex flex-col items-center group">
               <FeatureIcon><svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg></FeatureIcon>
@@ -311,13 +314,16 @@ const HomePage: React.FC = () => {
           <div className="grid md:grid-cols-2 gap-16 items-center">
             {/* Left Column: Content */}
             <div className="text-center md:text-left">
-              <span className="text-sm font-bold uppercase text-secondary tracking-wider">Our Referral Program</span>
-              <h2 className="mt-2 text-3xl md:text-4xl font-bold text-white">Refer & Earn Big!</h2>
-              <p className="mt-4 text-tertiary text-4xl md:text-5xl font-extrabold">
+              <SectionHeader
+                badge="Our Referral Program"
+                title="Refer & Earn Big!"
+                description="For every successful referral, we reward you with substantial payouts. It's our way of saying thanks for sharing the trust."
+                centered={false}
+                lightMode
+                className="mb-8 md:mb-8"
+              />
+              <p className="mt-0 text-tertiary text-4xl md:text-5xl font-extrabold mb-8 italic">
                 Up to ₹1,00,000
-              </p>
-              <p className="mt-2 text-white/80 text-lg">
-                For every successful referral.
               </p>
 
               <div className="mt-8 space-y-6">

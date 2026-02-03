@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { ScrollAnimated } from './ScrollAnimated';
+import SectionHeader from './SectionHeader';
 
 interface Testimonial {
   id: string;
@@ -77,12 +78,10 @@ export const Testimonials: React.FC = () => {
     <section className="py-20 bg-muted">
       <div className="container mx-auto px-4">
         <ScrollAnimated animation="fadeInUp">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground">What Our Clients Say</h2>
-            <p className="mt-2 text-muted-foreground max-w-2xl mx-auto">
-              Don't just take our word for it. Here's what our satisfied clients have to say about working with us.
-            </p>
-          </div>
+          <SectionHeader
+            title="What Our Clients Say"
+            description="Don't just take our word for it. Here's what our satisfied clients have to say about working with us."
+          />
         </ScrollAnimated>
 
         <div className="max-w-4xl mx-auto">
@@ -137,9 +136,8 @@ export const Testimonials: React.FC = () => {
                     <button
                       key={index}
                       onClick={() => setCurrentIndex(index)}
-                      className={`w-2 h-2 rounded-full transition-all ${
-                        index === currentIndex ? 'bg-secondary w-8' : 'bg-muted-foreground/30'
-                      }`}
+                      className={`w-2 h-2 rounded-full transition-all ${index === currentIndex ? 'bg-secondary w-8' : 'bg-muted-foreground/30'
+                        }`}
                       aria-label={`Go to testimonial ${index + 1}`}
                     />
                   ))}
