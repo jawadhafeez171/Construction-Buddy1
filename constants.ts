@@ -209,31 +209,31 @@ export const PROJECTS: Project[] = [
     title: 'Cambridge English High School',
     category: ProjectCategory.INSTITUTIONAL,
     description: 'Construction of the Cambridge English High School, featuring a modern textured facade, spacious corridors, and a central courtyard. The project focused on creating a functional and durable educational environment for students and staff.',
-    coverImage: '/School.jpeg',
-    images: ['/School.jpeg', '/School 1.jpeg', '/School 2.jpeg', '/School 3.jpeg', '/School 4.jpeg', '/School 5.jpeg']
+    coverImage: '/School.webp',
+    images: ['/School.webp', '/School 1.webp', '/School 2.webp', '/School 3.webp', '/School 4.webp', '/School 5.webp']
   },
   {
     id: 'grand-mosque-construction',
     title: 'Grand Mosque Construction',
     category: ProjectCategory.INSTITUTIONAL,
     description: 'A large-scale institutional project involving the construction of a grand mosque. The design features traditional Islamic architecture with prominent domes, elegant arches, and intricate facade details. The project showcases our capability in handling complex structural and decorative work.',
-    coverImage: '/Madrasa 1.png',
-    images: ['/Madrasa 1.png', '/Madrasa 2.png', '/Mosque 1.png']
+    coverImage: '/Madrasa 1.webp',
+    images: ['/Madrasa 1.webp', '/Madrasa 2.webp', '/Mosque 1.webp']
   },
   {
     id: 'modern-elegant-residence-jp-nagar',
     title: 'Modern Elegant Residence, JP Nagar',
     category: ProjectCategory.RESIDENTIAL,
     description: 'A stunning contemporary family home in JP Nagar that seamlessly blends modern cubist architecture with elegant traditional elements. This residence features striking geometric forms with textured brown panels and clean white surfaces, complemented by wood-paneled accents and large windows. The design emphasizes both aesthetic appeal and functionality, with multiple balconies for outdoor living and a warm, inviting atmosphere throughout.',
-    coverImage: '/Residential 1 render.png',
-    images: ['/Residential 1 render.png', '/Residential 1.png']
+    coverImage: '/Residential 1 render.webp',
+    images: ['/Residential 1 render.webp', '/Residential 1.webp']
   },
   {
     id: 'residential-project-construction-phases',
     title: 'Residential Project - Construction Phases',
     category: ProjectCategory.RESIDENTIAL,
     description: 'Showcasing the various phases of a residential construction project, from the initial concrete structure to the final exterior finishing. This project highlights our process and attention to detail at every stage of the build.',
-    coverImage: '/House.jpeg',
-    images: ['/House 2.jpeg', '/House.jpeg']
+    coverImage: '/House.webp',
+    images: ['/House 2.webp', '/House.webp']
   }
 ];

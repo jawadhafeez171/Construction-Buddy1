@@ -9,7 +9,7 @@ const BLOGS = [
         excerpt: 'Explore the latest technologies shaping the future of construction, from AI-driven planning to sustainable materials.',
         date: 'February 2, 2026',
         author: 'Construction Buddy Team',
-        image: '/assets/Residential 1.jpg', // Using existing assets as placeholders
+        image: '/Residential 1.webp', // Using existing assets as placeholders
         category: 'Industry Trends'
     },
     {
@@ -18,7 +18,7 @@ const BLOGS = [
         excerpt: 'Understanding the difference between standard and premium materials and how they impact your home\'s longevity.',
         date: 'January 28, 2026',
         author: 'Expert Engineer',
-        image: '/assets/School 4.jpeg',
+        image: '/School 4.webp',
         category: 'Guides'
     },
     {
@@ -27,7 +27,7 @@ const BLOGS = [
         excerpt: 'A comprehensive guide to eco-friendly construction practices that save money and the planet.',
         date: 'January 15, 2026',
         author: 'Green Architect',
-        image: '/assets/House.jpeg',
+        image: '/House.webp',
         category: 'Sustainability'
     },
     {
@@ -36,7 +36,7 @@ const BLOGS = [
         excerpt: 'A detailed breakdown of construction costs per square foot in major cities.',
         date: 'January 5, 2026',
         author: 'Construction Buddy Team',
-        image: '/assets/Residential 1 render.png',
+        image: '/Residential 1 render.webp',
         category: 'Finance'
     },
     {
@@ -45,7 +45,7 @@ const BLOGS = [
         excerpt: 'Deciding whether to renovate your existing space or tear it down and start fresh.',
         date: 'December 20, 2025',
         author: 'Senior Consultant',
-        image: '/assets/Madrasa 1.png',
+        image: '/Madrasa 1.webp',
         category: 'Guides'
     },
     {
@@ -54,7 +54,7 @@ const BLOGS = [
         excerpt: 'How we ensure the safety of our workers and your property during every phase of construction.',
         date: 'December 10, 2025',
         author: 'Safety Officer',
-        image: '/assets/Mosque 1.png',
+        image: '/Mosque 1.webp',
         category: 'Safety'
     }
 ];
@@ -95,8 +95,8 @@ const BlogsPage: React.FC = () => {
                             key={category}
                             onClick={() => setSelectedCategory(category)}
                             className={`px-5 py-2 rounded-full text-sm font-medium transition-all duration-300 border ${selectedCategory === category
-                                    ? 'bg-secondary text-secondary-foreground border-secondary shadow-md'
-                                    : 'bg-card text-card-foreground border-border hover:border-secondary/50'
+                                ? 'bg-secondary text-secondary-foreground border-secondary shadow-md'
+                                : 'bg-card text-card-foreground border-border hover:border-secondary/50'
                                 }`}
                         >
                             {category}
