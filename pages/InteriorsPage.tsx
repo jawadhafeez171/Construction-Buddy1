@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { SERVICES } from '../constants';
+import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
 
 import KitchenIcon from '../components/icons/KitchenIcon';
 import TvUnitIcon from '../components/icons/TvUnitIcon';
@@ -12,6 +13,7 @@ import PersonalizedDesignIcon from '../components/icons/PersonalizedDesignIcon';
 import QualityMaterialsIcon from '../components/icons/QualityMaterialsIcon';
 import ExpertExecutionIcon from '../components/icons/ExpertExecutionIcon';
 import TransparentPricingIcon from '../components/icons/TransparentPricingIcon';
+import SectionHeader from '../components/SectionHeader';
 
 type PackageKey = '2BHK' | '3BHK' | '4BHK';
 
@@ -19,258 +21,353 @@ const service = SERVICES.find(s => s.id === 'interiors');
 
 const packages = {
     '2BHK': {
-        price: 'Rs. 4 Lakhs*',
+        price: '₹4 Lakhs*',
+        subtitle: 'Essential Elegance',
+        description: 'Perfect for compact homes, focusing on essential styling and functionality.',
         features: [
-            { icon: KitchenIcon, name: 'Kitchen - Modular' },
-            { icon: WardrobeIcon, name: 'Bedroom - 2 wardrobes' },
-            { icon: TvUnitIcon, name: 'Living Room - TV Unit' },
-            { icon: CrockeryUnitIcon, name: 'Dining - Crockery Unit' },
-            { icon: FalseCeilingIcon, name: 'Living Area - False Ceiling' },
-            { icon: StudyUnitIcon, name: 'Study unit (or) Shoe rack' },
+            { icon: KitchenIcon, name: 'Modular Kitchen' },
+            { icon: WardrobeIcon, name: '2 Wardrobes' },
+            { icon: TvUnitIcon, name: 'TV Unit' },
+            { icon: CrockeryUnitIcon, name: 'Crockery Unit' },
+            { icon: FalseCeilingIcon, name: 'Living Area False Ceiling' },
+            { icon: StudyUnitIcon, name: 'Shoe Rack / Study Unit' },
         ]
     },
     '3BHK': {
-        price: 'Rs. 5 Lakhs*',
+        price: '₹5 Lakhs*',
+        subtitle: 'Modern Comfort',
+        description: 'A balanced package for growing families, offering more storage and premium finishes.',
         features: [
-            { icon: KitchenIcon, name: 'Kitchen - Modular (Upgraded)' },
-            { icon: WardrobeIcon, name: 'Bedroom - 3 wardrobes with loft' },
-            { icon: TvUnitIcon, name: 'Living Room - TV Unit & Showcase' },
-            { icon: CrockeryUnitIcon, name: 'Dining - Crockery Unit' },
-            { icon: FalseCeilingIcon, name: 'Living & Dining - False Ceiling' },
-            { icon: StudyUnitIcon, name: 'Study unit & Bookshelf' },
-        ]
+            { icon: KitchenIcon, name: 'Modular Kitchen (Upgraded)' },
+            { icon: WardrobeIcon, name: '3 Wardrobes with Loft' },
+            { icon: TvUnitIcon, name: 'TV Unit & Showcase' },
+            { icon: CrockeryUnitIcon, name: 'Crockery Unit' },
+            { icon: FalseCeilingIcon, name: 'Living & Dining False Ceiling' },
+            { icon: StudyUnitIcon, name: 'Study Unit & Bookshelf' },
+        ],
+        popular: true
     },
     '4BHK': {
-        price: 'Rs. 6 Lakhs*',
+        price: '₹6 Lakhs*',
+        subtitle: 'Luxury Living',
+        description: 'Comprehensive interior solutions for larger homes, delivering luxury in every corner.',
         features: [
             { icon: KitchenIcon, name: 'Premium Modular Kitchen' },
-            { icon: WardrobeIcon, name: 'Bedroom - 4 wardrobes with loft' },
-            { icon: TvUnitIcon, name: 'Living Room - Entertainment Unit' },
-            { icon: CrockeryUnitIcon, name: 'Dining - Crockery Unit with Bar area' },
-            { icon: FalseCeilingIcon, name: 'Full House False Ceiling Design' },
-            { icon: StudyUnitIcon, name: 'Dedicated Study Room Interior' },
+            { icon: WardrobeIcon, name: '4 Wardrobes with Loft' },
+            { icon: TvUnitIcon, name: 'Entertainment Unit' },
+            { icon: CrockeryUnitIcon, name: 'Crockery Unit & Bar Area' },
+            { icon: FalseCeilingIcon, name: 'Full House False Ceiling' },
+            { icon: StudyUnitIcon, name: 'Dedicated Study Room' },
         ]
     }
 };
 
 const designAreas = [
-    { name: 'Exquisite Living Areas', image: 'https://picsum.photos/seed/living-room-interior/800/600', description: 'Crafting comfortable and stylish living spaces for you to relax and entertain.' },
-    { name: 'Ergonomic Modular Kitchens', image: 'https://picsum.photos/seed/kitchen-interior/800/600', description: 'Designing beautiful, efficient kitchens that are a joy to cook in.' },
-    { name: 'Serene Bedroom Designs', image: 'https://picsum.photos/seed/bedroom-interior/800/600', description: 'Creating peaceful and personal sanctuaries for rest and rejuvenation.' },
+    { name: 'Living Areas', image: 'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&q=80&w=1974', description: 'Crafting comfortable and stylish living spaces for you to relax and entertain.' },
+    { name: 'Modern Kitchens', image: 'https://images.unsplash.com/photo-1556911220-e15b29be8c8f?auto=format&fit=crop&q=80&w=2070', description: 'Designing beautiful, efficient kitchens that are a joy to cook in.' },
+    { name: 'Serene Bedrooms', image: 'https://images.unsplash.com/photo-1616594039964-40891a909d93?auto=format&fit=crop&q=80&w=2670', description: 'Creating peaceful and personal sanctuaries for rest and rejuvenation.' },
 ];
 
 const promiseItems = [
-    { icon: PersonalizedDesignIcon, title: 'Personalized Design', description: 'We don’t just design rooms; we craft experiences. Our team works closely with you to create a space that is a true reflection of your personality and lifestyle.' },
-    { icon: QualityMaterialsIcon, title: 'Uncompromising Quality', description: 'From laminates and hardware to fabrics and finishes, we source only the finest materials to ensure a beautiful and durable result.' },
-    { icon: ExpertExecutionIcon, title: 'Flawless Execution', description: 'Our skilled craftsmen and project managers ensure every detail of the design is brought to life with precision and care.' },
-    { icon: TransparentPricingIcon, title: 'Transparent Pricing', description: 'Our detailed, itemized quotes mean no hidden costs or surprises. You know exactly what you’re paying for from day one.' },
+    { icon: PersonalizedDesignIcon, title: 'Personalized Design', description: 'Spaces that reflect your unique personality.' },
+    { icon: QualityMaterialsIcon, title: 'Premium Materials', description: 'Sourced from the finest brands for durability.' },
+    { icon: ExpertExecutionIcon, title: 'Flawless Execution', description: 'Precision craftsmanship by skilled professionals.' },
+    { icon: TransparentPricingIcon, title: 'Transparent Pricing', description: 'No hidden costs. Detailed, itemized quotes.' },
 ];
 
-
 const InteriorsPage: React.FC = () => {
-    const [activeTab, setActiveTab] = useState<PackageKey>('2BHK');
     const [currentExpertiseIndex, setCurrentExpertiseIndex] = useState(0);
+    const heroRef = useRef<HTMLDivElement>(null);
+    const { scrollYProgress } = useScroll({
+        target: heroRef,
+        offset: ["start start", "end start"]
+    });
+    const y = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
 
+    // Auto-advance slider
     useEffect(() => {
         const timer = setInterval(() => {
-            setCurrentExpertiseIndex(prevIndex => (prevIndex + 1) % designAreas.length);
-        }, 5000); // Change slide every 5 seconds
+            setCurrentExpertiseIndex(prev => (prev + 1) % designAreas.length);
+        }, 5000);
         return () => clearInterval(timer);
     }, []);
 
     if (!service) return <div>Service not found.</div>;
     const otherServices = SERVICES.filter(s => s.id !== service.id);
-    const activePackage = packages[activeTab];
 
     return (
-        <div className="bg-background">
-            {/* Hero Section */}
-            <section className="relative h-[60vh] bg-cover bg-center overflow-hidden" style={{ backgroundImage: "url('https://picsum.photos/seed/interior-hero/1920/1080')" }}>
-                <div className="absolute inset-0 bg-gradient-to-r from-gray-900 via-gray-900/80 to-transparent"></div>
-                <div className="relative z-10 container mx-auto px-4 h-full flex flex-col justify-center items-start text-white">
-                    <span className="bg-secondary/20 text-secondary border border-secondary/50 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider mb-4 backdrop-blur-sm animate-fadeInUp">
-                        Premium Interiors
-                    </span>
-                    <h1 className="text-4xl md:text-6xl font-extrabold max-w-3xl leading-tight animate-fadeInUp delay-100">
-                        Crafting Spaces, <br />
-                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-secondary to-tertiary">Creating Stories</span>
-                    </h1>
-                    <p className="mt-6 text-lg md:text-xl max-w-2xl text-white/80 animate-fadeInUp delay-200">
-                        Bespoke interior design solutions that reflect your personality and enhance your lifestyle.
-                    </p>
-                    <div className="mt-8 animate-fadeInUp delay-300">
-                        <Link to="/contact" className="bg-gradient-brand text-white font-bold py-3 px-8 rounded-full shadow-lg hover:shadow-orange-500/25 transition-all duration-300 hover:scale-105 inline-block">
-                            Book Consultation
-                        </Link>
-                    </div>
+        <div className="bg-background overflow-hidden">
+            {/* Cinematic Hero Section */}
+            <section ref={heroRef} className="relative h-[90vh] overflow-hidden flex items-center justify-center">
+                <motion.div style={{ y }} className="absolute inset-0 z-0">
+                    <div className="absolute inset-0 bg-black/40 z-10" />
+                    <img
+                        src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&q=80&w=2000"
+                        alt="Luxury Interior"
+                        className="w-full h-full object-cover"
+                    />
+                </motion.div>
+
+                <div className="relative z-20 container mx-auto px-4 text-center text-white">
+                    <motion.div
+                        initial={{ opacity: 0, y: 30 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.8, delay: 0.2 }}
+                    >
+                        <span className="inline-block py-1 px-3 rounded-full border border-white/30 bg-white/10 backdrop-blur-md text-xs font-semibold tracking-widest uppercase mb-6">
+                            Premium Interiors
+                        </span>
+                        <h1 className="text-5xl md:text-7xl lg:text-8xl font-serif font-medium tracking-tight mb-6">
+                            Crafting <span className="italic text-secondary">Soulful</span> Spaces
+                        </h1>
+                        <p className="text-lg md:text-2xl text-white/90 max-w-2xl mx-auto font-light leading-relaxed mb-10">
+                            Where aesthetic vision meets functional excellence. We design homes that tell your unique story.
+                        </p>
+                        <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                            <Link to="/contact">
+                                <motion.button
+                                    whileHover={{ scale: 1.05 }}
+                                    whileTap={{ scale: 0.95 }}
+                                    className="px-8 py-4 bg-white text-black font-bold rounded-full text-lg shadow-xl hover:shadow-2xl transition-all"
+                                >
+                                    Book Consultation
+                                </motion.button>
+                            </Link>
+                            <Link to="#packages">
+                                <motion.button
+                                    whileHover={{ scale: 1.05 }}
+                                    whileTap={{ scale: 0.95 }}
+                                    className="px-8 py-4 bg-white/10 backdrop-blur-md border border-white/30 text-white font-bold rounded-full text-lg hover:bg-white/20 transition-all"
+                                >
+                                    View Packages
+                                </motion.button>
+                            </Link>
+                        </div>
+                    </motion.div>
                 </div>
+
+                {/* Scroll Indicator */}
+                <motion.div
+                    animate={{ y: [0, 10, 0] }}
+                    transition={{ repeat: Infinity, duration: 2 }}
+                    className="absolute bottom-10 left-1/2 -translate-x-1/2 text-white/70 z-20"
+                >
+                    <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+                    </svg>
+                </motion.div>
             </section>
 
-            <div className="container mx-auto px-4 py-16">
-                <div className="flex flex-col lg:flex-row gap-12">
-                    {/* Main Content */}
-                    <div className="lg:w-2/3">
-                        <div className="space-y-20">
+            {/* Main Content Container */}
+            <div className="container mx-auto px-4 pt-24 pb-12">
+                <div className="flex flex-col lg:flex-row gap-16">
+                    {/* Primary Content Area */}
+                    <div className="lg:w-full">
 
-                            {/* Packages Details Section */}
-                            <section className="relative group">
-                                <div className="absolute -inset-1 bg-gradient-to-r from-secondary to-tertiary rounded-2xl opacity-20 blur transition duration-1000 group-hover:opacity-40"></div>
-                                <div className="relative bg-card p-6 sm:p-10 rounded-xl border border-border">
-                                    <div className="text-center mb-10">
-                                        <h2 className="text-3xl md:text-4xl font-bold text-foreground">Affordable Interior Packages</h2>
-                                        <p className="mt-3 text-muted-foreground max-w-2xl mx-auto">Transparent pricing to help you plan your dream interiors with ease.</p>
-                                    </div>
+                        {/* Packages Section */}
+                        <section id="packages" className="mb-32">
+                            <SectionHeader
+                                title="Curated Interior Packages"
+                                description="Transparent pricing tailored to your home's needs. Choose a plan that fits your vision."
+                            />
 
-                                    <div className="max-w-4xl mx-auto">
-                                        <div className="flex justify-center mb-8 gap-2 bg-muted p-1 rounded-full inline-flex mx-auto w-full sm:w-auto overflow-x-auto">
-                                            {(Object.keys(packages) as PackageKey[]).map(pkgName => (
-                                                <button
-                                                    key={pkgName}
-                                                    onClick={() => setActiveTab(pkgName)}
-                                                    className={`px-6 py-2 rounded-full text-sm font-bold transition-all duration-300 whitespace-nowrap focus:outline-none ${activeTab === pkgName
-                                                            ? 'bg-white text-secondary shadow-md'
-                                                            : 'text-muted-foreground hover:bg-white/50'
-                                                        }`}
-                                                >
-                                                    {pkgName} <span className="hidden sm:inline-block ml-1 opacity-75">{packages[pkgName].price}</span>
-                                                </button>
-                                            ))}
-                                        </div>
-
-                                        <div className="animate-fadeIn">
-                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                                {activePackage.features.map((feature, index) => (
-                                                    <div key={index} className="flex items-center space-x-4 p-4 bg-background rounded-lg border border-border hover:border-secondary/30 transition-colors">
-                                                        <div className="w-12 h-12 rounded-full bg-secondary/10 flex items-center justify-center flex-shrink-0 text-secondary">
-                                                            <feature.icon className="w-6 h-6" />
-                                                        </div>
-                                                        <span className="text-base font-medium text-foreground">{feature.name}</span>
-                                                    </div>
-                                                ))}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </section>
-
-                            {/* Why Choose Us Section */}
-                            <section>
-                                <h2 className="text-3xl font-bold text-foreground mb-10 text-center">Why Choose Us For Your Interiors?</h2>
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                    {promiseItems.map((item, index) => (
-                                        <div key={index} className="flex items-start p-6 bg-card rounded-xl border border-border hover:shadow-lg transition-all duration-300 hover:-translate-y-1 group">
-                                            <div className="flex-shrink-0 mr-5">
-                                                <div className="w-14 h-14 bg-gradient-to-br from-secondary to-tertiary text-white rounded-lg flex items-center justify-center transform rotate-3 group-hover:rotate-0 transition-transform">
-                                                    <item.icon className="w-7 h-7" />
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
+                                {(Object.entries(packages) as [PackageKey, typeof packages['2BHK']][]).map(([key, pkg], idx) => (
+                                    <motion.div
+                                        key={key}
+                                        initial={{ opacity: 0, y: 20 }}
+                                        whileInView={{ opacity: 1, y: 0 }}
+                                        viewport={{ once: true }}
+                                        transition={{ delay: idx * 0.1 }}
+                                        className={`relative group rounded-3xl p-1 ${pkg.popular ? 'bg-gradient-to-br from-secondary via-tertiary to-secondary' : 'bg-border/50'}`}
+                                    >
+                                        <div className="h-full bg-card rounded-[22px] p-8 flex flex-col relative overflow-hidden transition-transform duration-300 group-hover:-translate-y-1">
+                                            {pkg.popular && (
+                                                <div className="absolute top-0 right-0 bg-secondary text-white text-[10px] font-bold px-3 py-1 rounded-bl-xl uppercase tracking-widest">
+                                                    Best Value
                                                 </div>
-                                            </div>
-                                            <div>
-                                                <h3 className="text-xl font-bold text-foreground mb-2">{item.title}</h3>
-                                                <p className="text-muted-foreground text-sm leading-relaxed">{item.description}</p>
-                                            </div>
-                                        </div>
-                                    ))}
-                                </div>
-                            </section>
+                                            )}
 
-                            {/* Areas of Expertise */}
-                            <section>
-                                <div className="text-center mb-12">
-                                    <h2 className="text-3xl md:text-4xl font-bold text-foreground">Our Interior Design Expertise</h2>
-                                    <p className="mt-3 text-muted-foreground max-w-3xl mx-auto">We specialize in transforming every corner of your home into a perfect blend of functionality and aesthetics.</p>
+                                            <div className="mb-6">
+                                                <h3 className="text-sm font-bold text-muted-foreground uppercase tracking-wider mb-2">{key} Package</h3>
+                                                <div className="text-3xl font-serif font-bold text-foreground mb-2">{pkg.price}</div>
+                                                <div className="text-secondary font-medium text-sm">{pkg.subtitle}</div>
+                                            </div>
+
+                                            <div className="h-px w-full bg-border/50 mb-6" />
+
+                                            <ul className="space-y-4 mb-8 flex-grow">
+                                                {pkg.features.map((feature, i) => (
+                                                    <li key={i} className="flex items-start gap-3">
+                                                        <div className="mt-1 w-5 h-5 rounded-full bg-secondary/10 flex items-center justify-center flex-shrink-0 text-secondary">
+                                                            <feature.icon className="w-3 h-3" />
+                                                        </div>
+                                                        <span className="text-sm text-foreground/80">{feature.name}</span>
+                                                    </li>
+                                                ))}
+                                            </ul>
+
+                                            <Link to="/contact" className="w-full">
+                                                <button className={`w-full py-3 rounded-xl font-bold text-sm transition-all ${pkg.popular ? 'bg-secondary text-white shadow-lg hover:shadow-secondary/25' : 'bg-muted text-foreground hover:bg-muted/80'}`}>
+                                                    Get Quote
+                                                </button>
+                                            </Link>
+                                        </div>
+                                    </motion.div>
+                                ))}
+                            </div>
+                        </section>
+
+                        {/* Design Expertise Slider */}
+                        <section className="mb-32">
+                            <div className="relative h-[600px] w-full rounded-3xl overflow-hidden shadow-2xl group">
+                                <AnimatePresence mode='wait'>
+                                    <motion.div
+                                        key={currentExpertiseIndex}
+                                        initial={{ opacity: 0, scale: 1.1 }}
+                                        animate={{ opacity: 1, scale: 1 }}
+                                        exit={{ opacity: 0 }}
+                                        transition={{ duration: 0.7 }}
+                                        className="absolute inset-0"
+                                    >
+                                        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent z-10" />
+                                        <img
+                                            src={designAreas[currentExpertiseIndex].image}
+                                            alt={designAreas[currentExpertiseIndex].name}
+                                            className="w-full h-full object-cover"
+                                        />
+                                        <div className="absolute bottom-0 left-0 p-12 z-20 max-w-2xl">
+                                            <motion.h3
+                                                initial={{ y: 20, opacity: 0 }}
+                                                animate={{ y: 0, opacity: 1 }}
+                                                className="text-4xl md:text-5xl font-serif text-white mb-4"
+                                            >
+                                                {designAreas[currentExpertiseIndex].name}
+                                            </motion.h3>
+                                            <motion.p
+                                                initial={{ y: 20, opacity: 0 }}
+                                                animate={{ y: 0, opacity: 1 }}
+                                                transition={{ delay: 0.1 }}
+                                                className="text-white/80 text-lg leading-relaxed"
+                                            >
+                                                {designAreas[currentExpertiseIndex].description}
+                                            </motion.p>
+                                        </div>
+                                    </motion.div>
+                                </AnimatePresence>
+
+                                {/* Slider Navigation */}
+                                <div className="absolute bottom-12 right-12 z-20 flex gap-4">
+                                    <button
+                                        onClick={() => setCurrentExpertiseIndex(prev => (prev - 1 + designAreas.length) % designAreas.length)}
+                                        className="w-12 h-12 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white flex items-center justify-center hover:bg-white hover:text-black transition-all"
+                                    >
+                                        ←
+                                    </button>
+                                    <button
+                                        onClick={() => setCurrentExpertiseIndex(prev => (prev + 1) % designAreas.length)}
+                                        className="w-12 h-12 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white flex items-center justify-center hover:bg-white hover:text-black transition-all"
+                                    >
+                                        →
+                                    </button>
                                 </div>
-                                <div className="relative h-[500px] w-full mx-auto overflow-hidden rounded-2xl shadow-2xl">
-                                    {designAreas.map((area, index) => (
-                                        <div
-                                            key={area.name}
-                                            className={`absolute inset-0 transition-all duration-1000 ease-in-out transform ${index === currentExpertiseIndex ? 'opacity-100 scale-100' : 'opacity-0 scale-105 pointer-events-none'
-                                                }`}
-                                        >
-                                            <img src={area.image} alt={area.name} className="w-full h-full object-cover" />
-                                            <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent p-10 flex flex-col justify-end min-h-[50%]">
-                                                <h3 className="text-3xl font-bold text-white mb-3 translate-y-2 transform transition-transform duration-700 delay-100">{area.name}</h3>
-                                                <p className="text-white/90 text-lg translate-y-2 transform transition-transform duration-700 delay-200 opacity-0 group-hover:opacity-100">{area.description}</p>
+                            </div>
+                        </section>
+
+                        {/* Why Choose Us - Bento Grid Style */}
+                        <section className="mb-32">
+                            <SectionHeader title="The Construction Buddy Edge" description="Why homeowners across Bangalore trust us with their interiors." />
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-12">
+                                {promiseItems.map((item, idx) => (
+                                    <motion.div
+                                        key={idx}
+                                        initial={{ opacity: 0, y: 20 }}
+                                        whileInView={{ opacity: 1, y: 0 }}
+                                        viewport={{ once: true }}
+                                        transition={{ delay: idx * 0.1 }}
+                                        className="bg-card border border-border/50 p-8 rounded-2xl hover:bg-secondary/5 transition-colors group"
+                                    >
+                                        <div className="w-14 h-14 bg-background border border-border rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 group-hover:border-secondary/30 transition-all shadow-sm">
+                                            <div className="text-secondary">
+                                                <item.icon className="w-7 h-7" />
                                             </div>
                                         </div>
-                                    ))}
-                                    <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex space-x-3 z-10">
-                                        {designAreas.map((_, index) => (
-                                            <button
+                                        <h3 className="text-xl font-bold mb-3">{item.title}</h3>
+                                        <p className="text-muted-foreground leading-relaxed text-sm">
+                                            {item.description}
+                                        </p>
+                                    </motion.div>
+                                ))}
+                            </div>
+                        </section>
+
+                        {/* Process Section - Vertical Visual Path */}
+                        <section className="mb-32">
+                            <div className="bg-muted/30 rounded-3xl p-8 md:p-16 border border-border/50">
+                                <SectionHeader title="Seamless Execution Process" description="From concept to handover, we handle everything." />
+
+                                <div className="mt-16 relative">
+                                    {/* Connecting Line */}
+                                    <div className="absolute left-6 top-0 bottom-0 w-px bg-border md:left-1/2 md:-ml-px" />
+
+                                    <div className="space-y-12">
+                                        {service.process.map((step, index) => (
+                                            <motion.div
                                                 key={index}
-                                                onClick={() => setCurrentExpertiseIndex(index)}
-                                                className={`h-2 rounded-full transition-all duration-300 ${index === currentExpertiseIndex ? 'w-8 bg-secondary' : 'w-2 bg-white/50 hover:bg-white/80'
-                                                    }`}
-                                                aria-label={`Go to slide ${index + 1}`}
-                                            />
+                                                initial={{ opacity: 0, y: 20 }}
+                                                whileInView={{ opacity: 1, y: 0 }}
+                                                viewport={{ once: true }}
+                                                className={`relative flex flex-col md:flex-row gap-8 ${index % 2 === 0 ? 'md:flex-row-reverse' : ''}`}
+                                            >
+                                                <div className="md:w-1/2 flex justify-start md:justify-end items-center">
+                                                    <div className={`
+                                                        hidden md:block w-32 h-px bg-border 
+                                                        ${index % 2 === 0 ? 'origin-right scale-x-0 group-hover:scale-x-100' : 'origin-left'}
+                                                    `} />
+                                                </div>
+
+                                                {/* Number Node */}
+                                                <div className="absolute left-6 -translate-x-1/2 md:left-1/2 md:-translate-x-1/2 flex items-center justify-center">
+                                                    <div className="w-12 h-12 rounded-full bg-background border-4 border-muted flex items-center justify-center font-bold text-secondary shadow-sm z-10">
+                                                        {index + 1}
+                                                    </div>
+                                                </div>
+
+                                                <div className={`md:w-1/2 pl-16 md:pl-0 ${index % 2 === 0 ? 'md:pr-16 md:text-right' : 'md:pl-16'}`}>
+                                                    <div className="bg-card p-6 rounded-xl border border-border/50 shadow-sm hover:shadow-md transition-all">
+                                                        <h4 className="text-xs font-bold text-secondary uppercase tracking-widest mb-2">Phase {step.step}</h4>
+                                                        <h3 className="text-xl font-bold mb-3">{step.title}</h3>
+                                                        <p className="text-muted-foreground text-sm leading-relaxed">{step.description}</p>
+                                                    </div>
+                                                </div>
+                                            </motion.div>
                                         ))}
                                     </div>
                                 </div>
-                            </section>
+                            </div>
+                        </section>
 
-                            {/* Our Process Section */}
-                            <section>
-                                <h2 className="text-3xl font-bold text-foreground mb-10 text-center">Our Design & Execution Process</h2>
-                                <div className="relative border-l-2 border-border ml-4 pl-10 space-y-12">
-                                    {service.process.map((step, index) => (
-                                        <div key={index} className="relative group">
-                                            <div className="absolute -left-[54px] top-0 w-8 h-8 bg-background border-2 border-secondary rounded-full flex items-center justify-center font-bold text-xs text-secondary z-10 group-hover:scale-110 transition-transform">
-                                                {index + 1}
-                                            </div>
-                                            <div>
-                                                <span className="text-xs font-bold text-secondary uppercase tracking-widest mb-1 block">Phase {step.step}</span>
-                                                <h3 className="text-xl font-bold text-foreground mb-2 group-hover:text-secondary transition-colors">{step.title}</h3>
-                                                <p className="text-muted-foreground leading-relaxed">{step.description}</p>
-                                            </div>
-                                        </div>
-                                    ))}
-                                </div>
-                            </section>
-
-                            {/* CTA Section */}
-                            <section className="bg-gradient-brand text-white py-14 px-8 rounded-2xl text-center shadow-xl">
-                                <h2 className="text-3xl md:text-4xl font-extrabold mb-4">Ready to Redefine Your Space?</h2>
-                                <p className="max-w-2xl mx-auto text-white/90 text-lg mb-8">Let's collaborate to create an interior that's uniquely you. Contact us for a personalized design consultation today.</p>
-                                <Link to="/contact" className="inline-block bg-white text-secondary font-bold py-4 px-10 rounded-full hover:bg-gray-50 transition-all duration-300 transform hover:scale-105 shadow-md">
-                                    Get a Free Consultation
+                        {/* CTA */}
+                        <section className="text-center py-20 bg-gradient-brand rounded-3xl relative overflow-hidden">
+                            <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
+                            <div className="relative z-10 px-4">
+                                <h2 className="text-3xl md:text-5xl font-serif text-white mb-6">Ready to Transform Your Home?</h2>
+                                <p className="text-white/80 text-lg max-w-2xl mx-auto mb-10">
+                                    Let's create a space that inspires you every day. Schedule your free consultation now.
+                                </p>
+                                <Link to="/contact">
+                                    <motion.button
+                                        whileHover={{ scale: 1.05 }}
+                                        whileTap={{ scale: 0.95 }}
+                                        className="px-10 py-4 bg-white text-secondary font-bold rounded-full shadow-2xl hover:shadow-black/20 transition-all"
+                                    >
+                                        Start Your Project
+                                    </motion.button>
                                 </Link>
-                            </section>
+                            </div>
+                        </section>
 
-                        </div>
                     </div>
-
-                    {/* Sidebar */}
-                    <aside className="lg:w-1/3">
-                        <div className="sticky top-36 space-y-8">
-                            {/* Service Navigation */}
-                            <div className="bg-card p-6 rounded-xl shadow-lg border border-border/50">
-                                <h3 className="text-lg font-bold text-foreground mb-6 uppercase tracking-wider border-b border-border pb-4">Other Services</h3>
-                                <ul className="space-y-3">
-                                    {otherServices.map(s => (
-                                        <li key={s.id}>
-                                            <NavLink
-                                                to={s.path}
-                                                className={({ isActive }) =>
-                                                    `flex items-center justify-between p-3 rounded-lg transition-all duration-200 group ${isActive ? 'bg-secondary text-white shadow-md' : 'hover:bg-muted text-muted-foreground hover:text-foreground'}`
-                                                }
-                                            >
-                                                <span className="font-medium">{s.title}</span>
-                                                <span className="opacity-0 group-hover:opacity-100 transition-opacity">→</span>
-                                            </NavLink>
-                                        </li>
-                                    ))}
-                                </ul>
-                            </div>
-
-                            {/* Quick Contact Widget */}
-                            <div className="bg-muted/50 p-6 rounded-xl border border-border">
-                                <h3 className="text-lg font-bold text-foreground mb-4">Need Expert Advice?</h3>
-                                <p className="text-sm text-muted-foreground mb-6">Our design experts are here to help you choose the right package.</p>
-                                <Link to="/contact" className="block w-full text-center border-2 border-secondary text-secondary font-bold py-3 rounded-lg hover:bg-secondary hover:text-white transition-all">
-                                    Contact Expert
-                                </Link>
-                            </div>
-                        </div>
-                    </aside>
                 </div>
             </div>
         </div>

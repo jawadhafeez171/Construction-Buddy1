@@ -9,12 +9,9 @@ import ReferralIllustration from '../components/ReferralIllustration';
 import { Testimonials } from '../components/Testimonials';
 import { TrustSignals } from '../components/TrustSignals';
 import { FAQ } from '../components/FAQ';
+import ExpertiseSection from '../components/ExpertiseSection';
 import SectionHeader from '../components/SectionHeader';
 import ArrowRightIcon from '../components/icons/ArrowRightIcon';
-import TrustworthyBrandIcon from '../components/icons/TrustworthyBrandIcon';
-import CompetitivePriceIcon from '../components/icons/CompetitivePriceIcon';
-import HassleFreeIcon from '../components/icons/HassleFreeIcon';
-import ProfessionalProjectManagementIcon from '../components/icons/ProfessionalProjectManagementIcon';
 import ShareIcon from '../components/icons/ShareIcon';
 import BuildHouseIcon from '../components/icons/BuildHouseIcon';
 import EarnMoneyIcon from '../components/icons/EarnMoneyIcon';
@@ -27,11 +24,7 @@ const StepIcon: React.FC<{ number: string }> = ({ number }) => (
   </div>
 );
 
-const FeatureIcon: React.FC<{ children: React.ReactNode }> = ({ children }) => (
-  <div className="w-16 h-16 bg-tertiary text-tertiary-foreground rounded-full flex items-center justify-center mb-4">
-    {children}
-  </div>
-);
+
 
 const ScrollDownIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={3} stroke="currentColor" {...props}>
@@ -257,56 +250,7 @@ const HomePage: React.FC = () => {
       </section>
 
       {/* Why Choose Us Section */}
-      <section className="py-20 bg-background">
-        <div className="container mx-auto px-4">
-          <SectionHeader
-            title="Why Choose Us"
-            description="Built on a foundation of trust and quality."
-          />
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 text-center">
-            <div className="bg-card p-6 rounded-lg shadow-md transition-all duration-300 hover:shadow-xl hover:-translate-y-2 border border-border flex flex-col items-center group">
-              <FeatureIcon><svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg></FeatureIcon>
-              <h3 className="text-xl font-bold mb-2 group-hover:text-secondary transition-colors">Quality Assurance</h3>
-              <p className="text-muted-foreground">We use only the best materials and craftsmanship to ensure lasting quality.</p>
-            </div>
-            <div className="bg-card p-6 rounded-lg shadow-md transition-all duration-300 hover:shadow-xl hover:-translate-y-2 border border-border flex flex-col items-center group">
-              <FeatureIcon><svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg></FeatureIcon>
-              <h3 className="text-xl font-bold mb-2 group-hover:text-secondary transition-colors">On-Time Delivery</h3>
-              <p className="text-muted-foreground">Our efficient project management guarantees your project is completed on schedule.</p>
-            </div>
-            <div className="bg-card p-6 rounded-lg shadow-md transition-all duration-300 hover:shadow-xl hover:-translate-y-2 border border-border flex flex-col items-center group">
-              <FeatureIcon><svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg></FeatureIcon>
-              <h3 className="text-xl font-bold mb-2 group-hover:text-secondary transition-colors">Transparent Pricing</h3>
-              <p className="text-muted-foreground">We provide clear, upfront pricing with no hidden charges.</p>
-            </div>
-            <div className="bg-card p-6 rounded-lg shadow-md transition-all duration-300 hover:shadow-xl hover:-translate-y-2 border border-border flex flex-col items-center group">
-              <FeatureIcon><svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.653-.122-1.274-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.653.122-1.274.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" /></svg></FeatureIcon>
-              <h3 className="text-xl font-bold mb-2 group-hover:text-secondary transition-colors">Expert Team</h3>
-              <p className="text-muted-foreground">Our skilled professionals are dedicated to bringing your vision to life.</p>
-            </div>
-            <div className="bg-card p-6 rounded-lg shadow-md transition-all duration-300 hover:shadow-xl hover:-translate-y-2 border border-border flex flex-col items-center group">
-              <FeatureIcon><TrustworthyBrandIcon className="h-8 w-8" /></FeatureIcon>
-              <h3 className="text-xl font-bold mb-2 group-hover:text-secondary transition-colors">Trustworthy Brand</h3>
-              <p className="text-muted-foreground">Building trust with every brick, ensuring reliability and excellence in all projects.</p>
-            </div>
-            <div className="bg-card p-6 rounded-lg shadow-md transition-all duration-300 hover:shadow-xl hover:-translate-y-2 border border-border flex flex-col items-center group">
-              <FeatureIcon><CompetitivePriceIcon className="h-8 w-8" /></FeatureIcon>
-              <h3 className="text-xl font-bold mb-2 group-hover:text-secondary transition-colors">Competitive Prices</h3>
-              <p className="text-muted-foreground">Offering the best value for your investment with fair and competitive pricing.</p>
-            </div>
-            <div className="bg-card p-6 rounded-lg shadow-md transition-all duration-300 hover:shadow-xl hover:-translate-y-2 border border-border flex flex-col items-center group">
-              <FeatureIcon><HassleFreeIcon className="h-8 w-8" /></FeatureIcon>
-              <h3 className="text-xl font-bold mb-2 group-hover:text-secondary transition-colors">Hassle-Free Service</h3>
-              <p className="text-muted-foreground">Enjoy a seamless and stress-free experience from initial consultation to final handover.</p>
-            </div>
-            <div className="bg-card p-6 rounded-lg shadow-md transition-all duration-300 hover:shadow-xl hover:-translate-y-2 border border-border flex flex-col items-center group">
-              <FeatureIcon><ProfessionalProjectManagementIcon className="h-8 w-8" /></FeatureIcon>
-              <h3 className="text-xl font-bold mb-2 group-hover:text-secondary transition-colors">Professional Project Management</h3>
-              <p className="text-muted-foreground">Our expert team ensures your project runs smoothly, on time, and within budget.</p>
-            </div>
-          </div>
-        </div>
-      </section>
+      <ExpertiseSection />
 
       {/* Referral Section */}
       <section className="py-20 bg-gradient-to-br from-gray-900 to-primary text-primary-foreground">

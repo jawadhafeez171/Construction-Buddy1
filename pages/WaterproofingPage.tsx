@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { SERVICES } from '../constants';
 import BasementIcon from '../components/icons/BasementIcon';
 import RoofIcon from '../components/icons/RoofIcon';
 import BathroomIcon from '../components/icons/BathroomIcon';
 import WallIcon from '../components/icons/WallIcon';
+import SectionHeader from '../components/SectionHeader';
+import { motion, useScroll, useTransform } from 'framer-motion';
 
 const benefitItems = [
     { title: 'Prevent Structural Damage', description: "Protect your building's foundation and structural steel from the corrosive effects of water." },
@@ -21,126 +23,188 @@ const serviceItems = [
 ];
 
 const WaterproofingPage: React.FC = () => {
-    const service = SERVICES.find(s => s.id === 'waterproofing-solutions');
+    const heroRef = useRef<HTMLDivElement>(null);
+    const { scrollYProgress } = useScroll({
+        target: heroRef,
+        offset: ["start start", "end start"]
+    });
+    const y = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
 
-    if (!service) {
-        return (
-            <div className="container mx-auto px-4 py-16 text-center">
-                <h1 className="text-4xl font-bold">Service not found.</h1>
-                <p className="mt-4 text-muted-foreground">The requested service could not be found.</p>
-            </div>
-        );
-    }
+    const service = SERVICES.find(s => s.id === 'waterproofing-solutions');
+    if (!service) return <div>Service not found.</div>;
+
     const otherServices = SERVICES.filter(s => s.id !== service.id);
 
     return (
-        <div className="bg-background">
-            {/* Hero Section */}
-            <section className="relative h-[60vh] bg-cover bg-center overflow-hidden" style={{ backgroundImage: "linear-gradient(to bottom right, #0f172a, #1e293b)" }}>
-                <div className="absolute inset-0 opacity-20" style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")` }}></div>
-                <div className="absolute inset-0 bg-gradient-to-r from-gray-900 via-gray-900/80 to-transparent"></div>
-                <div className="relative z-10 container mx-auto px-4 h-full flex flex-col justify-center items-start text-white">
-                    <span className="bg-secondary/20 text-secondary border border-secondary/50 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider mb-4 backdrop-blur-sm animate-fadeInUp">
-                        Advanced Protection
-                    </span>
-                    <h1 className="text-4xl md:text-6xl font-extrabold max-w-4xl leading-tight animate-fadeInUp delay-100">
-                        Protect Your Investment <br />
-                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-secondary to-tertiary">From the Top Down</span>
-                    </h1>
-                    <p className="mt-6 text-lg md:text-xl max-w-2xl text-white/80 animate-fadeInUp delay-200">
-                        Uncompromising waterproofing solutions for a secure, healthy, and damp-free property.
-                    </p>
-                    <div className="mt-8 animate-fadeInUp delay-300">
-                        <Link to="/contact" className="bg-gradient-brand text-white font-bold py-3 px-8 rounded-full shadow-lg hover:shadow-orange-500/25 transition-all duration-300 hover:scale-105 inline-block">
-                            Get a Free Inspection
-                        </Link>
-                    </div>
+        <div className="bg-background overflow-hidden">
+            {/* Cinematic Hero Section */}
+            <section ref={heroRef} className="relative h-[80vh] overflow-hidden flex items-center justify-center">
+                <motion.div style={{ y }} className="absolute inset-0 z-0">
+                    <div className="absolute inset-0 bg-cyan-950/80 z-10 mix-blend-multiply" />
+                    <div className="absolute inset-0 bg-black/50 z-10" />
+                    <img
+                        src="https://images.unsplash.com/photo-1518112166165-901f7bb56e05?q=80&w=2070&auto=format&fit=crop"
+                        alt="Water Droplets Protection"
+                        className="w-full h-full object-cover"
+                    />
+                </motion.div>
+
+                <div className="relative z-20 container mx-auto px-4 text-center text-white">
+                    <motion.div
+                        initial={{ opacity: 0, y: 30 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.8, delay: 0.2 }}
+                    >
+                        <span className="inline-block py-1 px-3 rounded-full border border-white/30 bg-white/10 backdrop-blur-md text-xs font-semibold tracking-widest uppercase mb-6">
+                            Advanced Hydro-Protection
+                        </span>
+                        <h1 className="text-5xl md:text-7xl font-serif font-medium tracking-tight mb-6">
+                            Protect Your <br />
+                            <span className="italic text-cyan-400">Sanctuary</span>
+                        </h1>
+                        <p className="text-lg md:text-xl text-white/80 max-w-2xl mx-auto font-light leading-relaxed mb-10">
+                            Uncompromising waterproofing solutions for a secure, healthy, and damp-free property.
+                        </p>
+                        <div className="flex justify-center">
+                            <Link to="/contact">
+                                <motion.button
+                                    whileHover={{ scale: 1.05 }}
+                                    whileTap={{ scale: 0.95 }}
+                                    className="px-8 py-4 bg-cyan-600 text-white font-bold rounded-full text-lg shadow-xl hover:shadow-cyan-500/30 transition-all hover:bg-cyan-500"
+                                >
+                                    Get a Free Inspection
+                                </motion.button>
+                            </Link>
+                        </div>
+                    </motion.div>
                 </div>
             </section>
 
-            <div className="container mx-auto px-4 py-16">
-                <div className="flex flex-col lg:flex-row gap-12">
+            <div className="container mx-auto px-4 pt-24 pb-12">
+                <div className="flex flex-col lg:flex-row gap-16">
                     {/* Main Content */}
-                    <div className="lg:w-2/3">
-                        <div className="space-y-20">
+                    <div className="lg:w-full">
+                        <div className="space-y-32">
 
                             {/* Why it's crucial Section */}
                             <section>
-                                <div className="text-center mb-12">
-                                    <h2 className="text-3xl font-bold text-foreground mb-4">Why Waterproofing is a Necessity</h2>
-                                    <p className="text-muted-foreground leading-relaxed max-w-3xl mx-auto">Water damage is silent but destructive. Here is why you need professional protection.</p>
-                                </div>
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <SectionHeader
+                                    title="Why Waterproofing is a Necessity"
+                                    description="Water damage is silent but destructive. Here is why you need professional protection."
+                                />
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-12">
                                     {benefitItems.map((item, index) => (
-                                        <div key={index} className="bg-card p-6 rounded-xl shadow-sm border border-border hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
-                                            <h3 className="text-xl font-bold text-secondary mb-3">{item.title}</h3>
+                                        <motion.div
+                                            key={index}
+                                            initial={{ opacity: 0, y: 20 }}
+                                            whileInView={{ opacity: 1, y: 0 }}
+                                            viewport={{ once: true }}
+                                            transition={{ delay: index * 0.1 }}
+                                            className="bg-card p-8 rounded-3xl shadow-sm border border-border hover:shadow-xl hover:bg-secondary/5 transition-all duration-300 group"
+                                        >
+                                            <h3 className="text-xl font-bold text-foreground mb-3 group-hover:text-cyan-600 transition-colors">{item.title}</h3>
                                             <p className="text-muted-foreground leading-relaxed">{item.description}</p>
-                                        </div>
+                                        </motion.div>
                                     ))}
                                 </div>
                             </section>
 
                             {/* Our Services Section */}
                             <section>
-                                <h2 className="text-3xl font-bold text-foreground mb-10 text-center">Comprehensive Waterproofing Services</h2>
+                                <div className="text-center mb-16">
+                                    <h2 className="text-3xl md:text-5xl font-serif font-medium text-foreground mb-4">Comprehensive Solutions</h2>
+                                    <p className="text-muted-foreground max-w-2xl mx-auto text-lg">Covering every corner of your property.</p>
+                                </div>
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                     {serviceItems.map((item, index) => (
-                                        <div key={index} className="flex items-start p-6 bg-card rounded-xl border border-border hover:border-secondary/30 transition-colors group">
-                                            <div className="flex-shrink-0 mr-5">
-                                                <div className="w-14 h-14 bg-blue-100 text-blue-600 rounded-lg flex items-center justify-center group-hover:bg-blue-600 group-hover:text-white transition-colors">
-                                                    <item.icon className="w-7 h-7" />
+                                        <motion.div
+                                            key={index}
+                                            initial={{ opacity: 0, scale: 0.95 }}
+                                            whileInView={{ opacity: 1, scale: 1 }}
+                                            viewport={{ once: true }}
+                                            transition={{ delay: index * 0.1 }}
+                                            className="flex flex-col sm:flex-row items-center sm:items-start p-8 bg-card rounded-2xl border border-border hover:border-cyan-500/50 hover:shadow-lg transition-all group text-center sm:text-left"
+                                        >
+                                            <div className="flex-shrink-0 mb-4 sm:mb-0 sm:mr-6">
+                                                <div className="w-16 h-16 bg-cyan-100 text-cyan-600 rounded-2xl flex items-center justify-center group-hover:bg-cyan-600 group-hover:text-white transition-all transform group-hover:rotate-12">
+                                                    <item.icon className="w-8 h-8" />
                                                 </div>
                                             </div>
                                             <div>
-                                                <h3 className="text-xl font-bold text-foreground mb-2">{item.title}</h3>
+                                                <h3 className="text-xl font-bold text-foreground mb-2 group-hover:text-cyan-600 transition-colors">{item.title}</h3>
                                                 <p className="text-muted-foreground text-sm leading-relaxed">{item.description}</p>
                                             </div>
-                                        </div>
+                                        </motion.div>
                                     ))}
                                 </div>
                             </section>
 
-
                             {/* Our Process Section */}
                             {service.process && service.process.length > 0 && (
                                 <section>
-                                    <h2 className="text-3xl font-bold text-foreground mb-10 text-center">Our Scientific 4-Step Process</h2>
-                                    <div className="relative border-l-2 border-border ml-4 pl-10 space-y-12">
-                                        {service.process.map((step, index) => (
-                                            <div key={index} className="relative group">
-                                                <div className="absolute -left-[54px] top-0 w-8 h-8 bg-background border-2 border-secondary rounded-full flex items-center justify-center font-bold text-xs text-secondary z-10 group-hover:scale-110 transition-transform shadow-sm">
-                                                    {index + 1}
-                                                </div>
-                                                <div className="bg-card p-6 rounded-xl border border-border/50 hover:shadow-md transition-shadow">
-                                                    <span className="text-xs font-bold text-secondary uppercase tracking-widest mb-2 block">Step {step.step}</span>
-                                                    <h3 className="text-xl font-bold text-foreground mb-2">{step.title}</h3>
-                                                    <p className="text-muted-foreground leading-relaxed">{step.description}</p>
-                                                </div>
-                                            </div>
-                                        ))}
+                                    <div className="bg-muted/30 rounded-[3rem] p-8 md:p-16 border border-border/50">
+                                        <SectionHeader title="Our Scientific Process" description="A systematic approach to complete sealing." />
+
+                                        <div className="mt-16 grid grid-cols-1 md:grid-cols-4 gap-4">
+                                            {service.process.map((step, index) => (
+                                                <motion.div
+                                                    key={index}
+                                                    initial={{ opacity: 0, y: 20 }}
+                                                    whileInView={{ opacity: 1, y: 0 }}
+                                                    viewport={{ once: true }}
+                                                    transition={{ delay: index * 0.15 }}
+                                                    className="relative group"
+                                                >
+                                                    <div className="bg-card p-6 rounded-2xl border border-border/50 h-full hover:shadow-md transition-all hover:-translate-y-2">
+                                                        <div className="absolute -top-4 -right-4 w-10 h-10 bg-cyan-600 text-white rounded-full flex items-center justify-center font-bold shadow-lg z-10">
+                                                            {index + 1}
+                                                        </div>
+                                                        <h3 className="text-lg font-bold text-foreground mb-3 mt-2 group-hover:text-cyan-600 transition-colors">{step.title}</h3>
+                                                        <p className="text-muted-foreground text-sm leading-relaxed">{step.description}</p>
+                                                    </div>
+                                                </motion.div>
+                                            ))}
+                                        </div>
                                     </div>
                                 </section>
                             )}
 
                             {/* Materials Section */}
-                            <section className="bg-muted/30 p-10 rounded-2xl border border-border/50 text-center">
-                                <h2 className="text-3xl font-bold text-foreground mb-6">Advanced Technology & Materials</h2>
-                                <p className="text-muted-foreground max-w-3xl mx-auto mb-8 leading-relaxed">We don&apos;t believe in one-size-fits-all solutions. We use a range of high-performance, industry-leading materials to ensure the most effective and durable protection.</p>
-                                <div className="flex flex-wrap justify-center gap-4">
-                                    <div className="bg-background border border-border text-foreground font-semibold px-6 py-3 rounded-full shadow-sm hover:border-secondary hover:text-secondary transition-colors">Advanced Polymer Membranes</div>
-                                    <div className="bg-background border border-border text-foreground font-semibold px-6 py-3 rounded-full shadow-sm hover:border-secondary hover:text-secondary transition-colors">Crystalline Coatings</div>
-                                    <div className="bg-background border border-border text-foreground font-semibold px-6 py-3 rounded-full shadow-sm hover:border-secondary hover:text-secondary transition-colors">Epoxy & PU Grouting</div>
-                                    <div className="bg-background border border-border text-foreground font-semibold px-6 py-3 rounded-full shadow-sm hover:border-secondary hover:text-secondary transition-colors">High-Performance Sealants</div>
+                            <section className="bg-gradient-to-br from-gray-900 to-gray-800 text-white p-12 rounded-[3rem] shadow-2xl text-center relative overflow-hidden">
+                                <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
+                                <div className="relative z-10 w-full">
+                                    <h2 className="text-3xl font-bold mb-8">Advanced Technology & Materials</h2>
+                                    <p className="text-white/70 max-w-3xl mx-auto mb-10 leading-relaxed text-lg">
+                                        We use industry-leading materials for durable protection.
+                                    </p>
+                                    <div className="flex flex-wrap justify-center gap-4">
+                                        {['Advanced Polymer Membranes', 'Crystalline Coatings', 'Epoxy & PU Grouting', 'High-Performance Sealants'].map((mat, idx) => (
+                                            <span key={idx} className="px-6 py-3 rounded-full bg-white/10 border border-white/20 backdrop-blur-sm text-sm font-bold tracking-wide">
+                                                {mat}
+                                            </span>
+                                        ))}
+                                    </div>
                                 </div>
                             </section>
 
                             {/* CTA Section */}
-                            <section className="bg-gradient-brand text-white py-14 px-8 rounded-2xl text-center shadow-xl">
-                                <h2 className="text-3xl md:text-4xl font-extrabold mb-4">Don't Wait for the Drip.</h2>
-                                <p className="max-w-2xl mx-auto text-white/90 text-lg mb-8">A small leak today can be a major expense tomorrow. Secure your property now.</p>
-                                <Link to="/contact" className="inline-block bg-white text-secondary font-bold py-4 px-10 rounded-full hover:bg-gray-50 transition-all duration-300 transform hover:scale-105 shadow-md">
-                                    Get a Free Inspection & Quote
-                                </Link>
+                            <section className="text-center py-20 bg-gradient-brand rounded-[3rem] relative overflow-hidden">
+                                <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
+                                <div className="relative z-10 px-4">
+                                    <h2 className="text-3xl md:text-5xl font-serif text-white mb-6">Don't Wait for the Drip.</h2>
+                                    <p className="text-white/90 text-lg max-w-2xl mx-auto mb-10">
+                                        A small leak today can be a major expense tomorrow. Secure your property now.
+                                    </p>
+                                    <Link to="/contact">
+                                        <motion.button
+                                            whileHover={{ scale: 1.05 }}
+                                            whileTap={{ scale: 0.95 }}
+                                            className="px-10 py-4 bg-white text-secondary font-bold rounded-full shadow-2xl hover:shadow-black/20 transition-all"
+                                        >
+                                            Get Free Inspection
+                                        </motion.button>
+                                    </Link>
+                                </div>
                             </section>
                         </div>
                     </div>

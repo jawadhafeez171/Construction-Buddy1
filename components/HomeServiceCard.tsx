@@ -14,55 +14,60 @@ const HomeServiceCard: React.FC<HomeServiceCardProps> = ({ service, index }) => 
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
+      viewport={{ once: true, margin: "-50px" }}
       transition={{ duration: 0.5, delay: index * 0.1 }}
     >
       <Link
         to={service.path}
-        className="group relative flex flex-col h-full bg-card border border-border/40 rounded-xl overflow-hidden transition-all duration-500 hover:shadow-[0_20px_50px_rgba(0,0,0,0.15)] hover:-translate-y-2 hover:border-secondary/50"
+        className="group relative flex flex-col h-full bg-card border border-border/60 rounded-2xl overflow-hidden transition-all duration-300 hover:shadow-xl hover:shadow-black/5 hover:-translate-y-1 hover:border-secondary/50"
       >
         {/* Header Image */}
-        <div className="relative h-32 sm:h-40 overflow-hidden">
+        <div className="relative h-48 sm:h-52 overflow-hidden">
           {service.cardImage ? (
             <img
               src={service.cardImage}
               alt={service.title}
-              className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110 grayscale-[30%] group-hover:grayscale-0"
+              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
             />
           ) : (
-            <div className="w-full h-full bg-gradient-to-br from-secondary/20 to-tertiary/20" />
+            <div className="w-full h-full bg-gradient-to-br from-secondary/5 to-tertiary/5" />
           )}
-          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent opacity-90" />
+          {/* Subtle overlay for text readability if needed, though mostly image is top */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-60" />
         </div>
 
-        {/* Icon - Overlapping with bounce effect */}
-        <div className="relative -mt-8 ml-5 z-20">
-          <div className="inline-flex p-3 rounded-xl bg-card/80 backdrop-blur-xl border border-white/20 shadow-2xl group-hover:bg-secondary group-hover:text-white group-hover:scale-110 transition-all duration-500 ease-out">
-            <ServiceStaticIcon serviceId={service.id} className="w-6 h-6" />
+        {/* Icon - Floating Card Style */}
+        <div className="relative -mt-10 ml-6 z-20">
+          <div className="inline-flex p-3 rounded-xl bg-background border border-border/10 shadow-lg group-hover:bg-secondary group-hover:text-white transition-all duration-300 ease-out group-hover:scale-105 group-hover:rotate-3">
+            <ServiceStaticIcon serviceId={service.id} className="w-7 h-7" />
           </div>
         </div>
 
         {/* Content */}
-        <div className="p-5 pt-5 flex-grow flex flex-col">
-          <h3 className="text-sm font-extrabold text-foreground uppercase tracking-widest mb-3 group-hover:text-secondary transition-colors leading-snug">
+        <div className="p-6 pt-2 flex-grow flex flex-col">
+          <h3 className="text-lg font-bold text-card-foreground mb-3 group-hover:text-secondary transition-colors line-clamp-2">
             {service.title}
           </h3>
-          <p className="text-[11.5px] text-muted-foreground leading-relaxed opacity-70 group-hover:opacity-100 transition-opacity mb-4">
+          <p className="text-sm text-muted-foreground/80 leading-relaxed line-clamp-3 mb-6">
             {service.descriptions[0]}
           </p>
 
-          {/* Learn More Hint */}
-          <div className="mt-auto flex items-center text-[10px] font-bold text-secondary uppercase tracking-widest opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-500">
-            <span>Explore Details</span>
-            <span className="ml-2 group-hover:translate-x-1 transition-transform">→</span>
+          {/* Learn More - Always visible but highlights on hover */}
+          <div className="mt-auto flex items-center text-sm font-bold text-secondary">
+            <span className="group-hover:underline underline-offset-4 decoration-2">Explore Service</span>
+            <svg
+              className="w-4 h-4 ml-2 transition-transform duration-300 group-hover:translate-x-1"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+            </svg>
           </div>
         </div>
 
-        {/* Dynamic Glass Edge Glow */}
-        <div className="absolute inset-0 border-t border-l border-white/10 rounded-xl pointer-events-none" />
-
-        {/* Bottom Animated Line */}
-        <div className="absolute bottom-0 left-0 right-0 h-1.5 bg-gradient-to-r from-secondary via-secondary to-tertiary scale-x-0 group-hover:scale-x-100 transition-transform duration-700 origin-left" />
+        {/* Decorative Bottom Line (optional, keeps it subtle) */}
+        <div className="absolute bottom-0 left-0 right-0 h-1 bg-secondary transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
       </Link>
     </motion.div>
   );
